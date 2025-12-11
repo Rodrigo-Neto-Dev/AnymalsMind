@@ -27,7 +27,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sLog1",
+    "path":"sprites/sLog1/sLog1.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }
