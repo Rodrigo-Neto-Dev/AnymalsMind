@@ -1,6 +1,7 @@
 {
   "FolderOrderSettings":[
     {"name":"Effects","order":7,"path":"folders/Effects.yy",},
+    {"name":"TransformationList","order":8,"path":"folders/TransformationList.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},

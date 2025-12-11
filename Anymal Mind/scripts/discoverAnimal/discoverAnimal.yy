@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"discoverAnimal",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"discoverAnimal",
+  "parent":{
+    "name":"TransformationList",
+    "path":"folders/TransformationList.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

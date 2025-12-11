@@ -11,6 +11,7 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"Effects","folderPath":"folders/Effects.yy","name":"Effects","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"TransformationList","folderPath":"folders/TransformationList.yy","name":"TransformationList","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Handlers","folderPath":"folders/Handlers.yy","name":"Handlers","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"MainMenu","folderPath":"folders/MainMenu.yy","name":"MainMenu","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/MainMenu/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -26,7 +27,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.1.210",
+    "IDEVersion":"2024.14.2.212",
   },
   "name":"Anymal Mind",
   "resources":[
@@ -52,6 +53,7 @@
     {"id":{"name":"rMainMenu","path":"rooms/rMainMenu/rMainMenu.yy",},},
     {"id":{"name":"rPauseMenu","path":"rooms/rPauseMenu/rPauseMenu.yy",},},
     {"id":{"name":"rPersistence","path":"rooms/rPersistence/rPersistence.yy",},},
+    {"id":{"name":"discoverAnimal","path":"scripts/discoverAnimal/discoverAnimal.yy",},},
     {"id":{"name":"TextFunctions","path":"scripts/TextFunctions/TextFunctions.yy",},},
     {"id":{"name":"sndConfirmation","path":"sounds/sndConfirmation/sndConfirmation.yy",},},
     {"id":{"name":"sndSelect","path":"sounds/sndSelect/sndSelect.yy",},},
