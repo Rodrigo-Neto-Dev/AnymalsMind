@@ -1,6 +1,12 @@
 ysp += 0.1;
 xsp = 0;
 
+camera_set_view_pos(view_camera[0], x - (view_wport[0] / 2), y - (view_hport[0] / 2));
+
+if keyboard_check_pressed(ord("P")) {
+	room_goto(1)
+}
+
 // all variables that need to count down
 if (transformation_cooldown > 0) {
 	transformation_cooldown -= 1;
@@ -75,5 +81,6 @@ if place_meeting(x, y, oFlag) {
 }
 
 if place_meeting(x, y, oSpike) {
+	room_persistent = false
 	room_restart();
 }
