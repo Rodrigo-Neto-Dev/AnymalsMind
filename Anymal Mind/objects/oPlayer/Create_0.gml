@@ -11,6 +11,14 @@ transformation_cooldown = 0;
 bird_jumps = 3;
 bird_jump_timer = 0;
 
+#region DOLPHIN
+    _gravity_normal = 1
+    _gravity_swimming = 0
+    _gravity = _gravity_normal
+    
+    in_water = false
+#endregion
+
 
 // states ( for animations etc)
 is_grounded = true;

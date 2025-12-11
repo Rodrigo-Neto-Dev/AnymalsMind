@@ -1,5 +1,6 @@
 {
   "FolderOrderSettings":[
+    {"name":"Effects","order":7,"path":"folders/Effects.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},
@@ -20,6 +21,7 @@
     {"name":"oPersistenceHandler","order":2,"path":"objects/oPersistenceHandler/oPersistenceHandler.yy",},
     {"name":"oSolid","order":3,"path":"objects/oSolid/oSolid.yy",},
     {"name":"oSpike","order":4,"path":"objects/oSpike/oSpike.yy",},
+    {"name":"oWater","order":5,"path":"objects/oWater/oWater.yy",},
     {"name":"r2","order":2,"path":"rooms/r2/r2.yy",},
     {"name":"rMainMenu","order":3,"path":"rooms/rMainMenu/rMainMenu.yy",},
     {"name":"rPersistence","order":3,"path":"rooms/rPersistence/rPersistence.yy",},
@@ -32,5 +34,6 @@
     {"name":"sPlayer","order":2,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sSolid","order":3,"path":"sprites/sSolid/sSolid.yy",},
     {"name":"sSpike","order":4,"path":"sprites/sSpike/sSpike.yy",},
+    {"name":"sWater","order":8,"path":"sprites/sWater/sWater.yy",},
   ],
 }

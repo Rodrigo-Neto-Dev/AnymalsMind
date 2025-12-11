@@ -1,4 +1,8 @@
-ysp += 0.1;
+if current_animal == "frog" and in_water == true {
+	ysp = 0;
+} else {
+	ysp += 0.1
+}
 xsp = 0;
 
 camera_set_view_pos(view_camera[0], x - (view_wport[0] / 2), y - (view_hport[0] / 2));
@@ -29,10 +33,27 @@ if (transformation_cooldown == 0) {
 		transformation_cooldown = 120;
 		current_animal = "bear";
 	}
+	if (keyboard_check_pressed(ord("3")) && (current_animal != "bear" )) {
+		sprite_index = sPlayer; // sP1Frog
+		transformation_cooldown = 120;
+		current_animal = "dolphin";
+	}
 }
 
 
-
+#region DOLPHIN WATER CHECK
+    if place_meeting(x, y, oWater) {
+	    _gravity = _gravity_swimming
+		ysp = lerp(ysp, 0, 0.1)
+		
+		if !in_water {
+			ysp /= 4
+		}
+		in_water = true
+	} else {
+		_gravity = _gravity_normal
+	}
+#endregion
 
 
 
