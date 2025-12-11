@@ -1,7 +1,7 @@
 {
   "$GMSprite":"v2",
   "%Name":"sP1Bird",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":31,
   "bbox_left":5,
   "bbox_right":24,
