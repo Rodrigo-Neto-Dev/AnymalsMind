@@ -40,6 +40,13 @@ bear_push_power = 1; // tweak force
 	water_movement_slow_down_factor = 0.9 // To reduce the speed of the player bellow water
 #endregion
 
+#region CAT
+    is_climbing = false
+    left_wall = false
+    rigth_wall = false
+	wall_jump_speed_factor = 10 // To make a quick jump out of climbing mode
+#endregion
+
 
 // states ( for animations etc)
 is_grounded = true;

@@ -8,7 +8,7 @@ global.animals = [
     { name: "Bear", discovered: false },
     { name: "Frog", discovered: false },
     { name: "Cat",  discovered: false },
-    { name: "Gryph", discovered: false }
+    { name: "Griffon", discovered: false }
 ];
 
 persistent = true; 

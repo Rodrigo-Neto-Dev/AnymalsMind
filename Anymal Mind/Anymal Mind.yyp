@@ -64,6 +64,7 @@
     {"id":{"name":"sP1Bear","path":"sprites/sP1Bear/sP1Bear.yy",},},
     {"id":{"name":"sP1Bird","path":"sprites/sP1Bird/sP1Bird.yy",},},
     {"id":{"name":"sP1BirdAnim","path":"sprites/sP1BirdAnim/sP1BirdAnim.yy",},},
+    {"id":{"name":"sP1Cat","path":"sprites/sP1Cat/sP1Cat.yy",},},
     {"id":{"name":"sP1Frog","path":"sprites/sP1Frog/sP1Frog.yy",},},
     {"id":{"name":"sP2","path":"sprites/sP2/sP2.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},

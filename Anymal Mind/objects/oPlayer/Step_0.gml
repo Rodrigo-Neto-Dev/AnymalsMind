@@ -29,6 +29,10 @@ if (bird_jump_timer > 0) {
 	bird_jump_timer -= 1;
 }
 
+if (gryph_jump_timer > 0) {
+	gryph_jump_timer--;
+}
+
 
 #region TRANSFORMATION
 if (transformation_cooldown == 0) {
@@ -52,69 +56,17 @@ if (transformation_cooldown == 0) {
 	}
 
 	if (keyboard_check_pressed(ord("4")) && (current_animal != "Cat" ) ) {
-		sprite_index = sPlayer; // sP1Cat
+		sprite_index = sP1Cat;
 		transformation_cooldown = 120;
 		current_animal = "Cat";
 		discover_animal(current_animal)
 	}
 	if (keyboard_check_pressed(ord("5")) && (current_animal != "Griffon" ) ) {
-		sprite_index = sPlayer; // sP1Griffon
+		sprite_index = sP1Bear; // sP1Griffon
 		transformation_cooldown = 120;
 		current_animal = "Griffon";
 		discover_animal(current_animal)
 	}
-}
-#endregion
-
-#region CAT CLIMB
-if (current_animal == "Cat") {
-
-    is_climbing = false;
-    
-    var left_wall  = place_meeting(x - 1, y, oSolid);
-    var right_wall = place_meeting(x + 1, y, oSolid);
-
-    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
-        is_climbing = true;
-        ysp = -1;     
-        is_grounded = false;
-    }
-
-    if (is_climbing) {
-        _gravity = 0;
-    }
-}
-#endregion
-
-#region GRIFFON HYBRID LOGIC
-if (current_animal == "Griffon") {
-
-    is_climbing = false;
-
-    if (keyboard_check_pressed(vk_up)) {
-        if (is_grounded) {
-            ysp = -2;
-            is_grounded = false;
-            gryph_jumps = 3;
-        }
-        else if (gryph_jump_timer == 0 && gryph_jumps > 0) {
-            ysp = -2;
-            gryph_jump_timer = 10;
-            gryph_jumps--;
-        }
-    }
-
-    if (gryph_jump_timer > 0) gryph_jump_timer--;
-
-    var left_wall  = place_meeting(x - 1, y, oSolid);
-    var right_wall = place_meeting(x + 1, y, oSolid);
-
-    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
-        is_climbing = true;
-        ysp = -1;
-        is_grounded = false;
-        _gravity = 0;
-    }
 }
 #endregion
 
@@ -123,6 +75,7 @@ if place_meeting(x, y+1, oSolid) {
 	ysp = 0;
 	is_grounded = true;
 	bird_jumps = 3;
+	gryph_jumps = 3;
 }
 #endregion
 
@@ -159,11 +112,50 @@ if place_meeting(x, y+1, oSolid) {
 	}
 #endregion
 
+#region CAT CLIMB
+if (current_animal == "Cat") {
+
+    is_climbing = false;
+    
+    left_wall  = place_meeting(x - 1, y, oSolid);
+    right_wall = place_meeting(x + 1, y, oSolid);
+	
+	if (left_wall || right_wall) {
+		is_climbing = true;
+		is_grounded = false;
+	}
+
+    if (is_climbing) {
+        _gravity = 0;
+    }
+}
+#endregion
+
+#region GRIFFON HYBRID LOGIC
+if (current_animal == "Griffon") {
+
+    is_climbing = false;
+
+    left_wall  = place_meeting(x - 1, y, oSolid);
+    right_wall = place_meeting(x + 1, y, oSolid);
+	
+	if (left_wall || right_wall) {
+		is_climbing = true;
+		is_grounded = false;
+		_gravity = 0;
+	}
+}
+#endregion
+
 #region ARROW MOVEMENT
 if keyboard_check(vk_left) {
 	if (in_water) {
 		xsp = -1 * water_movement_slow_down_factor;
-	} else {
+	}
+	else if (is_climbing && right_wall) {
+		xsp = -1 * wall_jump_speed_factor;
+	}
+	else {
 	    xsp = -1;
 	}
 }
@@ -171,7 +163,11 @@ if keyboard_check(vk_left) {
 if keyboard_check(vk_right) {
 	if (in_water) {
 		xsp = 1 * water_movement_slow_down_factor;
-	} else {
+	}
+	else if (is_climbing && left_wall) {
+		xsp = 1 * wall_jump_speed_factor;
+	}
+	else {
 	    xsp += 1;
 	}
 }
@@ -189,6 +185,18 @@ if ( keyboard_check_pressed(vk_up ) ) {
 		bird_jump_timer += 10;
 		bird_jumps--;
 	}
+    else if (current_animal == "Griffon" && !is_climbing && gryph_jump_timer == 0 && gryph_jumps > 0) {
+        ysp = -2 * _gravity;
+        gryph_jump_timer = 10;
+        gryph_jumps--;
+    }
+}
+
+if ( keyboard_check(vk_up) ) {
+	if (is_climbing) {
+		ysp = -1
+		gryph_jumps = 3
+	}
 }
 
 if ( keyboard_check_pressed(vk_down) ) {
@@ -196,9 +204,19 @@ if ( keyboard_check_pressed(vk_down) ) {
 		ysp = 1 * water_movement_slow_down_factor;
 	}
 }
+
+if ( keyboard_check(vk_down) ) {
+	if (is_climbing) {
+		ysp = 1
+	}
+}
 #endregion
 
 move_and_collide(xsp, ysp, oSolid);
+
+if (is_climbing) {
+	ysp = 0
+}
 
 if place_meeting(x, y, oFlag) {
 	room_goto_next();
