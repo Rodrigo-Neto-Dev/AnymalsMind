@@ -7,6 +7,9 @@ icon_size = 32;
 xps = 0;
 ysp = 0;
 
+_gravity_normal = 1
+_gravity = _gravity_normal
+
 // core animal transformation stuff
 current_animal = "normal";
 transformation_cooldown = 0;
@@ -16,11 +19,13 @@ bird_jumps = 3;
 bird_jump_timer = 0;
 
 #region FROG
-    _gravity_normal = 1
-    _gravity_swimming = 0
-    _gravity = _gravity_normal
-    
+	_gravity_water = 0
     in_water = false
+	water_enter_immediate_slow_down_factor = 0.4 // To reduce the falling speed of the player right when it enters the water
+	water_enter_slow_down_factor = 0.02 // To slowly reduce the falling speed of the player when it enters the water
+	in_water_steps_without_water_animal = 0 // Current steps inside the water without a water animal
+	in_water_steps_allowed_without_water_animal = 60 // 2s - Max limit of steps inside the water without a water animal before the player dies
+	water_movement_slow_down_factor = 0.9 // To reduce the speed of the player bellow water
 #endregion
 
 

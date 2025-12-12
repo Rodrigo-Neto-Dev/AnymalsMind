@@ -1,7 +1,6 @@
 {
   "FolderOrderSettings":[
     {"name":"Effects","order":7,"path":"folders/Effects.yy",},
-    {"name":"TransformationList","order":8,"path":"folders/TransformationList.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},
@@ -10,6 +9,7 @@
     {"name":"Pause","order":5,"path":"folders/Pause.yy",},
     {"name":"Rooms","order":2,"path":"folders/Rooms.yy",},
     {"name":"Sprites","order":3,"path":"folders/Sprites.yy",},
+    {"name":"TransformationList","order":8,"path":"folders/TransformationList.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
@@ -35,6 +35,7 @@
     {"name":"sP1Bear","order":7,"path":"sprites/sP1Bear/sP1Bear.yy",},
     {"name":"sP1Bird","order":5,"path":"sprites/sP1Bird/sP1Bird.yy",},
     {"name":"sP1BirdAnim","order":6,"path":"sprites/sP1BirdAnim/sP1BirdAnim.yy",},
+    {"name":"sP1Frog","order":10,"path":"sprites/sP1Frog/sP1Frog.yy",},
     {"name":"sP2","order":8,"path":"sprites/sP2/sP2.yy",},
     {"name":"sPlayer","order":2,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sSolid","order":3,"path":"sprites/sSolid/sSolid.yy",},

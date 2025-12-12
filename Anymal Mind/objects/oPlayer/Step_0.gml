@@ -1,9 +1,7 @@
-if current_animal == "frog" and in_water == true {
-	ysp = 0;
-} else {
-	ysp += 0.1
-}
+ysp += 0.1 * _gravity
 xsp = 0;
+
+show_debug_message(ysp)
 
 camera_set_view_pos(view_camera[0], x - (view_wport[0] / 2), y - (view_hport[0] / 2));
 
@@ -34,7 +32,7 @@ if (bird_jump_timer > 0) {
 }
 
 
-// Transformation:
+#region TRANSFORMATION
 if (transformation_cooldown == 0) {
 	if (keyboard_check_pressed(ord("1")) && (current_animal != "Bird" )) {
 		sprite_index = sP1Bird;
@@ -48,10 +46,10 @@ if (transformation_cooldown == 0) {
 		current_animal = "Bear";
 		discover_animal(current_animal)
 	}
-	if (keyboard_check_pressed(ord("3")) && (current_animal != "Dolphin" ) ) {
-		sprite_index = sPlayer; // sP1Frog
+	if (keyboard_check_pressed(ord("3")) && (current_animal != "Frog" ) ) {
+		sprite_index = sP1Frog;
 		transformation_cooldown = 120;
-		current_animal = "Dolphin";
+		current_animal = "Frog";
 		discover_animal(current_animal)
 	}
 
@@ -61,68 +59,94 @@ if (transformation_cooldown == 0) {
 		current_animal = "Cat";
 		discover_animal(current_animal)
 	}
-	if (keyboard_check_pressed(ord("5")) && (current_animal != "Gryph" ) ) {
-		sprite_index = sPlayer; // sP1Gryph
+	if (keyboard_check_pressed(ord("5")) && (current_animal != "Griffon" ) ) {
+		sprite_index = sPlayer; // sP1Griffon
 		transformation_cooldown = 120;
-		current_animal = "Gryph";
+		current_animal = "Griffon";
 		discover_animal(current_animal)
 	}
 }
-
-
-#region FROG WATER CHECK
-    if place_meeting(x, y, oWater) {
-	    _gravity = _gravity_swimming
-		ysp = lerp(ysp, 0, 0.1)
-		
-		if !in_water {
-			ysp /= 4
-		}
-		in_water = true
-	} else {
-		_gravity = _gravity_normal
-	}
 #endregion
 
-
-
-if keyboard_check(vk_left) {
-	xsp = -1;
-}
-
-if keyboard_check(vk_right) {
-	xsp += 1;
-}
-
+#region SOLID CHECK
 if place_meeting(x, y+1, oSolid) {
 	ysp = 0;
 	is_grounded = true;
 	bird_jumps = 3;
 }
+#endregion
 
-// codigo antigo que maybe é melhor idk
+#region FROG WATER CHECK
+    if place_meeting(x, y, oWater) {
+		
+	    _gravity = _gravity_water
+		
+		// Slow down while entering the water
+		ysp = lerp(ysp, 0, water_enter_slow_down_factor)
+		
+		if !in_water {
+			ysp *= water_enter_immediate_slow_down_factor
+		}
+		
+		if (current_animal != "Frog") {
+			in_water_steps_without_water_animal++
+			// Player dies if it used a non aquatic animal inside water for too long
+			if (in_water_steps_without_water_animal > in_water_steps_allowed_without_water_animal) {
+			    in_water_steps_without_water_animal = 0
+				room_persistent = false
+			    room_restart()
+			}
+		} else {
+			in_water_steps_without_water_animal = 0
+		}
+		
+		in_water = true
+		is_grounded = false
+		
+	} else {
+		_gravity = _gravity_normal
+		in_water = false
+	}
+#endregion
 
-//if ( (keyboard_check(vk_up)) && ( (is_grounded == true) or (current_animal == "bird") ) ){
-//	ysp = -2;
-//	is_grounded = false;
-//}
+#region ARROW MOVEMENT
+if keyboard_check(vk_left) {
+	if (in_water) {
+		xsp = -1 * water_movement_slow_down_factor;
+	} else {
+	    xsp = -1;
+	}
+}
 
-// actions player can only do when grounded
+if keyboard_check(vk_right) {
+	if (in_water) {
+		xsp = 1 * water_movement_slow_down_factor;
+	} else {
+	    xsp += 1;
+	}
+}
 
 if ( keyboard_check_pressed(vk_up ) ) {
 	if ( is_grounded == true ){
-		ysp = -2;
+		ysp = -2 * _gravity;
 		is_grounded = false;
 	}
+	else if (in_water) {
+		ysp = -1 * water_movement_slow_down_factor;
+	}
 	else if ( (current_animal == "Bird") && (bird_jump_timer == 0) && (bird_jumps > 0) ) {
-		ysp = -2;
+		ysp = -2 * _gravity;
 		bird_jump_timer += 10;
 		bird_jumps--;
 	}
-	
 }
 
-
+if ( keyboard_check_pressed(vk_down) ) {
+	if (in_water) {
+		ysp = 1 * water_movement_slow_down_factor;
+	}
+}
+#endregion
 
 move_and_collide(xsp, ysp, oSolid);
 
