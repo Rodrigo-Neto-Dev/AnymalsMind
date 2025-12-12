@@ -1,8 +1,6 @@
 ysp += 0.1 * _gravity
 xsp = 0;
 
-show_debug_message(ysp)
-
 camera_set_view_pos(view_camera[0], x - (view_wport[0] / 2), y - (view_hport[0] / 2));
 
 if keyboard_check_pressed(ord("P")) {
@@ -65,6 +63,58 @@ if (transformation_cooldown == 0) {
 		current_animal = "Griffon";
 		discover_animal(current_animal)
 	}
+}
+#endregion
+
+#region CAT CLIMB
+if (current_animal == "Cat") {
+
+    is_climbing = false;
+    
+    var left_wall  = place_meeting(x - 1, y, oSolid);
+    var right_wall = place_meeting(x + 1, y, oSolid);
+
+    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
+        is_climbing = true;
+        ysp = -1;     
+        is_grounded = false;
+    }
+
+    if (is_climbing) {
+        _gravity = 0;
+    }
+}
+#endregion
+
+#region GRIFFON HYBRID LOGIC
+if (current_animal == "Griffon") {
+
+    is_climbing = false;
+
+    if (keyboard_check_pressed(vk_up)) {
+        if (is_grounded) {
+            ysp = -2;
+            is_grounded = false;
+            gryph_jumps = 3;
+        }
+        else if (gryph_jump_timer == 0 && gryph_jumps > 0) {
+            ysp = -2;
+            gryph_jump_timer = 10;
+            gryph_jumps--;
+        }
+    }
+
+    if (gryph_jump_timer > 0) gryph_jump_timer--;
+
+    var left_wall  = place_meeting(x - 1, y, oSolid);
+    var right_wall = place_meeting(x + 1, y, oSolid);
+
+    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
+        is_climbing = true;
+        ysp = -1;
+        is_grounded = false;
+        _gravity = 0;
+    }
 }
 #endregion
 
