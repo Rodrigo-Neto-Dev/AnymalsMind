@@ -86,6 +86,58 @@ if (transformation_cooldown == 0) {
 
 
 
+#region CAT CLIMB
+if (current_animal == "Cat") {
+
+    is_climbing = false;
+    
+    var left_wall  = place_meeting(x - 1, y, oSolid);
+    var right_wall = place_meeting(x + 1, y, oSolid);
+
+    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
+        is_climbing = true;
+        ysp = -1;     
+        is_grounded = false;
+    }
+
+    if (is_climbing) {
+        _gravity = 0;
+    }
+}
+#endregion
+
+#region GRYPH HYBRID LOGIC
+if (current_animal == "Gryph") {
+
+    is_climbing = false;
+
+    if (keyboard_check_pressed(vk_up)) {
+        if (is_grounded) {
+            ysp = -2;
+            is_grounded = false;
+            gryph_jumps = 3;
+        }
+        else if (gryph_jump_timer == 0 && gryph_jumps > 0) {
+            ysp = -2;
+            gryph_jump_timer = 10;
+            gryph_jumps--;
+        }
+    }
+
+    if (gryph_jump_timer > 0) gryph_jump_timer--;
+
+    var left_wall  = place_meeting(x - 1, y, oSolid);
+    var right_wall = place_meeting(x + 1, y, oSolid);
+
+    if (keyboard_check(vk_up) && (left_wall || right_wall)) {
+        is_climbing = true;
+        ysp = -1;
+        is_grounded = false;
+        _gravity = 0;
+    }
+}
+#endregion
+
 if keyboard_check(vk_left) {
 	xsp = -1;
 }

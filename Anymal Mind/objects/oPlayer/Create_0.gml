@@ -15,6 +15,18 @@ transformation_cooldown = 0;
 bird_jumps = 3;
 bird_jump_timer = 0;
 
+// CAT
+cat_is_climbing = false;
+
+// GRYPH
+gryph_jumps = 3;
+gryph_jump_timer = 0;
+
+// BEAR (pushable objects)
+bear_push_power = 1; // tweak force
+
+
+
 #region FROG
     _gravity_normal = 1
     _gravity_swimming = 0
