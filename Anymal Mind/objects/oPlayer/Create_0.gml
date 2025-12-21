@@ -132,6 +132,7 @@ function general_behavior() {
 	    is_grounded = true;
 		is_flying = false;
     }
+	unstuck();
 }
 
 function aerial_behavior() {
@@ -283,6 +284,65 @@ function execute_move() {
 }
 
 // Util functions
+
+// To unstuck the animal if it gets stuck after transforming
+function unstuck() {
+	if (place_meeting(x, y, oSolid)) {
+		for (var i = 1; i < 1000; i++) {
+			// Right
+			if (!place_meeting(x + i, y, oSolid)) {
+				x += i;
+				break;
+			}
+			
+			// Left
+			if (!place_meeting(x - i, y, oSolid)) {
+				x -= i;
+				break;
+			}
+			
+			// Up
+			if (!place_meeting(x, y - i, oSolid)) {
+				y -= i;
+				break;
+			}
+			
+			// Down
+			if (!place_meeting(x, y + i, oSolid)) {
+				y += i;
+				break;
+			}
+			
+			// Top right
+			if (!place_meeting(x + i, y - i, oSolid)) {
+				x += i;
+				y -= i;
+				break;
+			}
+			
+			// Top left
+			if (!place_meeting(x - i, y - i, oSolid)) {
+				x -= i;
+				y -= i;
+				break;
+			}
+			
+			// Bottom right
+			if (!place_meeting(x + i, y + i, oSolid)) {
+				x += i;
+				y += i;
+				break;
+			}
+			
+			// Bottom left
+			if (!place_meeting(x - i, y + i, oSolid)) {
+				x -= i;
+				y += i;
+				break;
+			}
+		}
+	}
+}
 
 function next_level() {
 	global.current_animal = current_animal;
