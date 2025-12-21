@@ -15,12 +15,14 @@ if (ui_show_animals) {
 
     // List entries
     var yy = 60;
-    for (var i = 0; i < array_length(global.animals); i++) {
-        var a = global.animals[i];
+	
+    for (var i = 0; i < array_length(global.animal_names); i++) {
+		var name = global.animal_names[i];
+		var a = global.animals[? name];
 
         if (a.discovered) {
             draw_set_color(c_lime);
-            draw_text(40, yy, a.name);
+            draw_text(40, yy, name);
         } else {
             draw_set_color(c_orange);
             draw_text(40, yy, "???");
