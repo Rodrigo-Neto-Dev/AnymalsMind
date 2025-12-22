@@ -4,7 +4,7 @@ icon_x = 1272;
 icon_y = 16;
 icon_size = 32;
 
-xps = 0;
+xsp = 0;
 ysp = 0;
 
 _gravity_normal = 1
@@ -14,6 +14,27 @@ background = layer_background_get_id(layer_get_id("Background"));
 main_background_color = #28FF33;
 current_background_music = sndMain;
 prepare_background_music();
+
+// Controls
+
+open_pause_menu = ord("P");
+open_inventory = ord("B");
+
+up = vk_up;
+down = vk_down;
+left = vk_left;
+right = vk_right;
+left_released = false
+right_released = false;
+
+animal0 = ord("0");
+animal1 = ord("1");
+animal2 = ord("2");
+animal3 = ord("3");
+animal4 = ord("4");
+animal5 = ord("5");
+
+dash = ord("D");
 
 // UI state flag
 ui_show_animals = false;
@@ -41,8 +62,9 @@ steps_allowed_without_special = 240;
 #region AQUATIC
 	_gravity_water = 0;
     is_swimming = false;
+	is_dashing = false;
 	water_enter_immediate_slow_down_factor = 0.4; // To reduce the falling speed of the player right when it enters the water
-	water_enter_slow_down_factor = 0.02; // To slowly reduce the falling speed of the player when it enters the water
+	water_slow_down_factor = 0.02; // To slowly reduce the falling speed of the player in the water
 	in_water_steps_without_water_animal = 0; // Current steps inside the water without a water animal
 	in_water_steps_allowed_without_water_animal = 60; // 2s - Max limit of steps inside the water without a water animal before the player dies
 	water_movement_slow_down_factor = 0.9; // To reduce the speed of the player bellow water
@@ -96,6 +118,10 @@ steps_allowed_without_special = 240;
 	ds_map_add(frog_animation_states, "jumping", sP1FrogJumping);
 	ds_map_add(frog_animation_states, "swimming", sP1FrogSwimming);
 	
+	dash_cooldown = 60;
+	dash_steps_until_next = 0;
+	dash_distance = 96;
+	dash_time = 3;
 #endregion
 
 #region CAT
@@ -125,11 +151,11 @@ function set_camera() {
 }
 
 function check_menus() {
-	if keyboard_check_pressed(ord("P")) {
+	if keyboard_check_pressed(open_pause_menu) {
 	    room_goto(1);
     }
 
-    if (keyboard_check_pressed(ord("B"))) {
+    if (keyboard_check_pressed(open_inventory)) {
         ui_show_animals = !ui_show_animals;
     }
 }
@@ -153,32 +179,32 @@ function transform() {
     }
 	if (transformation_cooldown > 0) return;
 	
-	if (keyboard_check_pressed(ord("0")) && (current_animal != "Human")) {
+	if (keyboard_check_pressed(animal0) && (current_animal != "Human")) {
 		transformation_cooldown = 120;
 		current_animal = "Human";
 		current_animation_states = human_animation_states;
 	}
-    if (keyboard_check_pressed(ord("1")) && (current_animal != "Bird")) {
+    if (keyboard_check_pressed(animal1) && (current_animal != "Bird")) {
 		transformation_cooldown = 120;
 		current_animal = "Bird";
 		current_animation_states = bird_animation_states;
 	}
-	if (keyboard_check_pressed(ord("2")) && (current_animal != "Bear")) {
+	if (keyboard_check_pressed(animal2) && (current_animal != "Bear")) {
 		transformation_cooldown = 120;
 		current_animal = "Bear";
 		current_animation_states = bear_animation_states;
 	}
-	if (keyboard_check_pressed(ord("3")) && (current_animal != "Frog")) {
+	if (keyboard_check_pressed(animal3) && (current_animal != "Frog")) {
 		transformation_cooldown = 120;
 		current_animal = "Frog";
 		current_animation_states = frog_animation_states;
 	}
-	if (keyboard_check_pressed(ord("4")) && (current_animal != "Cat")) {
+	if (keyboard_check_pressed(animal4) && (current_animal != "Cat")) {
 		transformation_cooldown = 120;
 		current_animal = "Cat";
 		current_animation_states = cat_animation_states;
 	}
-	if (keyboard_check_pressed(ord("5")) && (current_animal != "Griffon")) {
+	if (keyboard_check_pressed(animal5) && (current_animal != "Griffon")) {
 		transformation_cooldown = 120;
 		current_animal = "Griffon";
 		current_animation_states = griffon_animation_states;
@@ -203,7 +229,7 @@ function general_behavior() {
 		is_flying = false;
     }
 	unstuck();
-	if (not keyboard_check(vk_up) && not keyboard_check(vk_down) && not keyboard_check(vk_left) && not keyboard_check(vk_right)) {
+	if (not holding_any_movement_key()) {
 		is_idle = true;
 	}
 	else {
@@ -213,6 +239,7 @@ function general_behavior() {
 
 function aerial_behavior() {
 	if (not global.animals[? current_animal].aerial) {
+		is_flying = false;
 		aerial_jumps = 3;
 		aerial_jump_timer = 0;
 		return;
@@ -227,7 +254,7 @@ function aerial_behavior() {
 	    aerial_jumps = 3;
     }
 	
-	if (keyboard_check_pressed(vk_up) && !is_grounded) {
+	if (keyboard_check_pressed(up) && !is_grounded) {
 		is_flying = true;
 	}
 }
@@ -239,11 +266,16 @@ function aquatic_behavior() {
 		
 	    _gravity = _gravity_water;
 		
-		// Slow down while entering the water
-		ysp = lerp(ysp, 0, water_enter_slow_down_factor);
+		// Slow down while in the water
+		ysp = lerp(ysp, 0, water_slow_down_factor);
 		
 		if !is_swimming {
 			ysp *= water_enter_immediate_slow_down_factor;
+		}
+		
+		// Spawn bubble in random steps
+		if (random_range(0, 100) <= 1) {
+			instance_create_layer(x, y - 10, "Effects", oWaterBubble);
 		}
 		
 		if (not global.animals[? current_animal].aquatic) {
@@ -255,6 +287,7 @@ function aquatic_behavior() {
 			}
 		} else {
 			in_water_steps_without_water_animal = 0;
+			if (dash_steps_until_next > 0) dash_steps_until_next--; // Needs more time until next dash
 		}
 		
 		is_swimming = true;
@@ -287,11 +320,11 @@ function climber_behavior() {
 // Movement
 
 function prepare_move() {
-	if keyboard_check(vk_left) {
+	if keyboard_check(left) {
 		image_xscale = -1; // Mirror image (turn left)
 		
 	    if (is_swimming) {
-		    xsp = -1 * water_movement_slow_down_factor;
+			xsp = -1 * water_movement_slow_down_factor;
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
@@ -304,8 +337,21 @@ function prepare_move() {
 			sprite_index = current_animation_states[? "running"];
 	    }
     }
+	
+	if (keyboard_check_released(left)) {
+		if (is_swimming) {
+			left_released = true;
+		}
+	}
+	
+	if (left_released) {
+		xsp = lerp(xsp, 0, water_slow_down_factor);
+		if (xsp == 0) {
+			left_released = false;
+		}
+	}
 
-    if keyboard_check(vk_right) {
+    if keyboard_check(right) {
 		image_xscale = 1; // Turn right
 		
 	    if (is_swimming) {
@@ -318,25 +364,31 @@ function prepare_move() {
 		    xsp = 1 * wall_jump_speed_factor;
 	    }
 	    else {
-	        xsp += 1;
+	        xsp = 1;
 			sprite_index = current_animation_states[? "running"];
 	    }
     }
+	
+	if (keyboard_check_released(right)) {
+		if (is_swimming) {
+			right_released = true;
+		}
+	}
+	
+	if (right_released) {
+		xsp = lerp(xsp, 0, water_slow_down_factor);
+		if (xsp == 0) {
+			right_released = false;
+		}
+	}
 
-    if ( keyboard_check_pressed(vk_up) ) {
+    if ( keyboard_check_pressed(up) ) {
 	    if ( is_grounded == true ){
 		    ysp = -2 * _gravity;
 		    is_grounded = false;
 			sprite_index = current_animation_states[? "jumping"];
 	    }
-	    else if (is_swimming) {
-		    ysp = -1 * water_movement_slow_down_factor;
-			image_yscale = 1;
-			if (!is_idle) {
-				sprite_index = current_animation_states[? "swimming"];
-			}
-	    }
-	    else if ( is_flying && !is_climbing && aerial_jump_timer == 0 && aerial_jumps > 0 ) {
+	    else if ( is_flying && !is_swimming && !is_climbing && aerial_jump_timer == 0 && aerial_jumps > 0 ) {
 		    ysp = -2 * _gravity;
 		    aerial_jump_timer += 10;
 		    aerial_jumps--;
@@ -344,25 +396,33 @@ function prepare_move() {
     }
 	
 	// If it is being hold
-	if (keyboard_check(vk_up)) {
-		if (is_climbing) {
+	if (keyboard_check(up)) {
+		if (is_swimming) {
+		    ysp = -1 * water_movement_slow_down_factor;
+			image_yscale = 1;
+			if (!is_idle) {
+				sprite_index = current_animation_states[? "swimming"];
+			}
+	    }
+		else if (is_climbing) {
 		    ysp = -1
 	    }
 	}
 
-    if ( keyboard_check_pressed(vk_down) ) {
-	    if (is_swimming) {
+    if ( keyboard_check_pressed(down) ) {
+	    //
+    }
+	
+	// If it is being hold
+	if (keyboard_check(down)) {
+		if (is_swimming) {
 		    ysp = 1 * water_movement_slow_down_factor;
 			image_yscale = -1;
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
 		}
-    }
-	
-	// If it is being hold
-	if (keyboard_check(vk_down)) {
-		if (is_climbing) {
+		else if (is_climbing) {
 		    ysp = 1
 	    }
 	}
@@ -378,6 +438,18 @@ function prepare_move() {
 	}
 	else {
 		steps_without_special = 0;
+	}
+	
+	// Underwater dash
+	if (keyboard_check_pressed(dash) && holding_any_movement_key()) {
+		if (is_swimming && dash_steps_until_next == 0) {
+			dash_steps_until_next = dash_cooldown;
+			is_dashing = true;
+			dash_direction = point_direction(0, 0, keyboard_check(right) - keyboard_check(left), keyboard_check(down) - keyboard_check(up));
+			dash_speed = dash_distance / dash_time;
+			dash_energy = dash_distance;
+			execute_dash();
+		}
 	}
 }
 
@@ -464,6 +536,20 @@ function unstuck() {
 				break;
 			}
 		}
+	}
+}
+
+function holding_any_movement_key() {
+	return keyboard_check(up) || keyboard_check(down) || keyboard_check(left) || keyboard_check(right);
+}
+
+function execute_dash() {
+	xsp = lengthdir_x(dash_speed, dash_direction);
+	ysp = lengthdir_y(dash_speed, dash_direction);
+	dash_energy -= dash_speed;
+	
+	if (dash_energy <= 0) {
+		is_dashing = false;
 	}
 }
 

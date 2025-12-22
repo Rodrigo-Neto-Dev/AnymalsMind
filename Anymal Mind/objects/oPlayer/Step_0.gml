@@ -1,5 +1,11 @@
 ysp += 0.1 * _gravity;
-xsp = 0;
+if (!is_swimming) {
+	xsp = 0;
+	if (is_dashing) {
+		ysp = 0;
+		is_dashing = false;
+	}
+}
 
 set_camera();
 check_menus();
