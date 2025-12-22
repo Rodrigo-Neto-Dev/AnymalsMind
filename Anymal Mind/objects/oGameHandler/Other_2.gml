@@ -23,5 +23,11 @@ global.animal_names = [
 
 global.current_animal = "Human"
 global.current_animal_sprite = sPlayer
+global.current_animation_states = ds_map_create();
+ds_map_add(global.current_animation_states, "idle", sPlayer);
+ds_map_add(global.current_animation_states, "special", sPlayer);
+ds_map_add(global.current_animation_states, "running", sPlayer);
+ds_map_add(global.current_animation_states, "jumping", sPlayer);
+ds_map_add(global.current_animation_states, "swimming", sPlayer);
 
 persistent = true; 

@@ -16,8 +16,14 @@ ui_show_animals = false;
 // Core animal transformation stuff
 current_animal = global.current_animal;
 sprite_index = global.current_animal_sprite;
+current_animation_states = global.current_animation_states;
 transformation_cooldown = 0;
+
+is_idle = true;
 is_grounded = true;
+// For animal special animations
+steps_without_special = 0;
+steps_allowed_without_special = 240;
 
 // Specific animal transformation stuff
 
@@ -47,6 +53,65 @@ is_grounded = true;
 #region STRONG
     push_power = 1; // tweak force
 #endregion
+
+// Specific animals
+
+#region HUMAN
+    human_animation_states = ds_map_create();
+	ds_map_add(human_animation_states, "idle", sPlayer);
+	ds_map_add(human_animation_states, "special", sPlayer);
+	ds_map_add(human_animation_states, "running", sPlayer);
+	ds_map_add(human_animation_states, "jumping", sPlayer);
+	ds_map_add(human_animation_states, "swimming", sPlayer);
+#endregion
+
+#region BIRD
+    bird_animation_states = ds_map_create();
+	ds_map_add(bird_animation_states, "idle", sP1Bird);
+	ds_map_add(bird_animation_states, "special", sP1Bird);
+	ds_map_add(bird_animation_states, "running", sP1Bird);
+	ds_map_add(bird_animation_states, "jumping", sP1Bird);
+	ds_map_add(bird_animation_states, "swimming", sP1Bird);
+#endregion
+
+#region BEAR
+    bear_animation_states = ds_map_create();
+	ds_map_add(bear_animation_states, "idle", sP1Bear);
+	ds_map_add(bear_animation_states, "special", sP1Bear);
+	ds_map_add(bear_animation_states, "running", sP1Bear);
+	ds_map_add(bear_animation_states, "jumping", sP1Bear);
+	ds_map_add(bear_animation_states, "swimming", sP1Bear);
+#endregion
+
+#region FROG
+    frog_animation_states = ds_map_create();
+	ds_map_add(frog_animation_states, "idle", sP1FrogIdle);
+	ds_map_add(frog_animation_states, "special", sP1FrogCroak);
+	ds_map_add(frog_animation_states, "running", sP1FrogRunning);
+	ds_map_add(frog_animation_states, "jumping", sP1FrogJumping);
+	ds_map_add(frog_animation_states, "swimming", sP1FrogSwimming);
+	
+#endregion
+
+#region CAT
+    cat_animation_states = ds_map_create();
+	ds_map_add(cat_animation_states, "idle", sP1Cat);
+	ds_map_add(cat_animation_states, "special", sP1Cat);
+	ds_map_add(cat_animation_states, "running", sP1Cat);
+	ds_map_add(cat_animation_states, "jumping", sP1Cat);
+	ds_map_add(cat_animation_states, "swimming", sP1Cat);
+#endregion
+
+#region GRIFFON
+    griffon_animation_states = ds_map_create();
+	ds_map_add(griffon_animation_states, "idle", sP1Bear);
+	ds_map_add(griffon_animation_states, "special", sP1Bear);
+	ds_map_add(griffon_animation_states, "running", sP1Bear);
+	ds_map_add(griffon_animation_states, "jumping", sP1Bear);
+	ds_map_add(griffon_animation_states, "swimming", sP1Bear);
+#endregion
+
+// ---------------------------------------------------------------------- //
 
 // Step functions
 
@@ -85,33 +150,33 @@ function transform() {
 	
 	if (keyboard_check_pressed(ord("0")) && (current_animal != "Human")) {
 		transformation_cooldown = 120;
-		sprite_index = sPlayer;
 		current_animal = "Human";
+		current_animation_states = human_animation_states;
 	}
     if (keyboard_check_pressed(ord("1")) && (current_animal != "Bird")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Bird;
 		current_animal = "Bird";
+		current_animation_states = bird_animation_states;
 	}
 	if (keyboard_check_pressed(ord("2")) && (current_animal != "Bear")) {
 		transformation_cooldown = 120;
-	    sprite_index = sP1Bear;
 		current_animal = "Bear";
+		current_animation_states = bear_animation_states;
 	}
 	if (keyboard_check_pressed(ord("3")) && (current_animal != "Frog")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Frog;
 		current_animal = "Frog";
+		current_animation_states = frog_animation_states;
 	}
 	if (keyboard_check_pressed(ord("4")) && (current_animal != "Cat")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Cat;
 		current_animal = "Cat";
+		current_animation_states = cat_animation_states;
 	}
 	if (keyboard_check_pressed(ord("5")) && (current_animal != "Griffon")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Bear; // sP1Griffon
 		current_animal = "Griffon";
+		current_animation_states = griffon_animation_states;
 	}
 	
 	discover_animal(current_animal);
@@ -133,6 +198,12 @@ function general_behavior() {
 		is_flying = false;
     }
 	unstuck();
+	if (not keyboard_check(vk_up) && not keyboard_check(vk_down) && not keyboard_check(vk_left) && not keyboard_check(vk_right)) {
+		is_idle = true;
+	}
+	else {
+		is_idle = false;
+	}
 }
 
 function aerial_behavior() {
@@ -185,6 +256,7 @@ function aquatic_behavior() {
 	} else {
 		_gravity = _gravity_normal
 		is_swimming = false
+		image_yscale = 1;
 	}
 }
 
@@ -208,26 +280,38 @@ function climber_behavior() {
 
 function prepare_move() {
 	if keyboard_check(vk_left) {
+		image_xscale = -1; // Mirror image (turn left)
+		
 	    if (is_swimming) {
 		    xsp = -1 * water_movement_slow_down_factor;
+			if (!is_idle) {
+				sprite_index = current_animation_states[? "swimming"];
+			}
 	    }
 	    else if (is_climbing && right_wall) {
 		    xsp = -1 * wall_jump_speed_factor;
 	    }
 	    else {
 	        xsp = -1;
+			sprite_index = current_animation_states[? "running"];
 	    }
     }
 
     if keyboard_check(vk_right) {
+		image_xscale = 1; // Turn right
+		
 	    if (is_swimming) {
 		    xsp = 1 * water_movement_slow_down_factor;
+			if (!is_idle) {
+				sprite_index = current_animation_states[? "swimming"];
+			}
 	    }
 	    else if (is_climbing && left_wall) {
 		    xsp = 1 * wall_jump_speed_factor;
 	    }
 	    else {
 	        xsp += 1;
+			sprite_index = current_animation_states[? "running"];
 	    }
     }
 
@@ -235,9 +319,14 @@ function prepare_move() {
 	    if ( is_grounded == true ){
 		    ysp = -2 * _gravity;
 		    is_grounded = false;
+			sprite_index = current_animation_states[? "jumping"];
 	    }
 	    else if (is_swimming) {
 		    ysp = -1 * water_movement_slow_down_factor;
+			image_yscale = 1;
+			if (!is_idle) {
+				sprite_index = current_animation_states[? "swimming"];
+			}
 	    }
 	    else if ( is_flying && !is_climbing && aerial_jump_timer == 0 && aerial_jumps > 0 ) {
 		    ysp = -2 * _gravity;
@@ -256,6 +345,10 @@ function prepare_move() {
     if ( keyboard_check_pressed(vk_down) ) {
 	    if (is_swimming) {
 		    ysp = 1 * water_movement_slow_down_factor;
+			image_yscale = -1;
+			if (!is_idle) {
+				sprite_index = current_animation_states[? "swimming"];
+			}
 		}
     }
 	
@@ -264,6 +357,19 @@ function prepare_move() {
 		if (is_climbing) {
 		    ysp = 1
 	    }
+	}
+	
+	// Idle
+	if (is_idle) {
+		sprite_index = current_animation_states[? "idle"];
+		steps_without_special++;
+		
+		if (steps_without_special >= steps_allowed_without_special) {
+			sprite_index = current_animation_states[? "special"];
+		}
+	}
+	else {
+		steps_without_special = 0;
 	}
 }
 
@@ -347,12 +453,14 @@ function unstuck() {
 function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
+	global.current_animation_states = current_animation_states;
 	room_goto_next();
 }
 
 function die() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
+	global.current_animation_states = current_animation_states;
 	room_persistent = false
 	room_restart();
 }
