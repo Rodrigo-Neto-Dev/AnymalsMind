@@ -12,6 +12,8 @@ _gravity = _gravity_normal
 
 background = layer_background_get_id(layer_get_id("Background"));
 main_background_color = #28FF33;
+current_background_music = sndMain;
+prepare_background_music();
 
 // UI state flag
 ui_show_animals = false;
@@ -37,13 +39,13 @@ steps_allowed_without_special = 240;
 #endregion
 
 #region AQUATIC
-	_gravity_water = 0
-    is_swimming = false
-	water_enter_immediate_slow_down_factor = 0.4 // To reduce the falling speed of the player right when it enters the water
-	water_enter_slow_down_factor = 0.02 // To slowly reduce the falling speed of the player when it enters the water
-	in_water_steps_without_water_animal = 0 // Current steps inside the water without a water animal
-	in_water_steps_allowed_without_water_animal = 60 // 2s - Max limit of steps inside the water without a water animal before the player dies
-	water_movement_slow_down_factor = 0.9 // To reduce the speed of the player bellow water
+	_gravity_water = 0;
+    is_swimming = false;
+	water_enter_immediate_slow_down_factor = 0.4; // To reduce the falling speed of the player right when it enters the water
+	water_enter_slow_down_factor = 0.02; // To slowly reduce the falling speed of the player when it enters the water
+	in_water_steps_without_water_animal = 0; // Current steps inside the water without a water animal
+	in_water_steps_allowed_without_water_animal = 60; // 2s - Max limit of steps inside the water without a water animal before the player dies
+	water_movement_slow_down_factor = 0.9; // To reduce the speed of the player bellow water
 #endregion
 
 #region CLIMBER
@@ -233,7 +235,7 @@ function aerial_behavior() {
 function aquatic_behavior() {
     if place_meeting(x, y, oWater) {
 		
-		set_background(sBackWater, -1);
+		set_background(sBackWater, -1, sndWater);
 		
 	    _gravity = _gravity_water;
 		
@@ -259,7 +261,7 @@ function aquatic_behavior() {
 		is_grounded = false;
 		
 	} else {
-		set_background(sBack, main_background_color);
+		set_background(sBack, main_background_color, sndMain);
 		_gravity = _gravity_normal;
 		is_swimming = false;
 		image_yscale = 1;
@@ -397,6 +399,15 @@ function execute_move() {
 
 // Util functions
 
+function prepare_background_music() {
+	// Play
+	audio_play_sound(sndMain, 10, true);
+	audio_play_sound(sndWater, 10, true);
+	
+	// Pause
+	audio_pause_sound(sndWater);
+}
+
 // To unstuck the animal if it gets stuck after transforming
 function unstuck() {
 	if (place_meeting(x, y, oSolid)) {
@@ -456,9 +467,14 @@ function unstuck() {
 	}
 }
 
-function set_background(back, color) {
+function set_background(back, color, sound) {
 	layer_background_change(background, back);
 	layer_background_blend(background, color);
+	if (current_background_music != sound) {
+		audio_pause_sound(current_background_music);
+		audio_resume_sound(sound);
+	    current_background_music = sound;
+	}
 }
 
 function next_level() {

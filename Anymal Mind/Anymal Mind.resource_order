@@ -1,7 +1,8 @@
 {
   "FolderOrderSettings":[
-    {"name":"Effects","order":7,"path":"folders/Effects.yy",},
     {"name":"Backgrounds","order":9,"path":"folders/Backgrounds.yy",},
+    {"name":"Effects","order":7,"path":"folders/Effects.yy",},
+    {"name":"Sounds","order":11,"path":"folders/Sounds.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},
@@ -30,6 +31,7 @@
     {"name":"r2","order":2,"path":"rooms/r2/r2.yy",},
     {"name":"rMainMenu","order":3,"path":"rooms/rMainMenu/rMainMenu.yy",},
     {"name":"rPersistence","order":3,"path":"rooms/rPersistence/rPersistence.yy",},
+    {"name":"sndMain","order":1,"path":"sounds/sndMain/sndMain.yy",},
     {"name":"sndSelect","order":1,"path":"sounds/sndSelect/sndSelect.yy",},
     {"name":"sArrow","order":5,"path":"sprites/sArrow/sArrow.yy",},
     {"name":"sBack","order":1,"path":"sprites/sBack/sBack.yy",},
