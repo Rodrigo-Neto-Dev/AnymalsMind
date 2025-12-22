@@ -6,8 +6,8 @@
   "name":"oBack",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Backgrounds",
+    "path":"folders/Backgrounds.yy",
   },
   "parentObjectId":null,
   "persistent":false,

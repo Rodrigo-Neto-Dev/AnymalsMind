@@ -10,6 +10,9 @@ ysp = 0;
 _gravity_normal = 1
 _gravity = _gravity_normal
 
+background = layer_background_get_id(layer_get_id("Background"));
+main_background_color = #28FF33;
+
 // UI state flag
 ui_show_animals = false;
 
@@ -230,32 +233,35 @@ function aerial_behavior() {
 function aquatic_behavior() {
     if place_meeting(x, y, oWater) {
 		
-	    _gravity = _gravity_water
+		set_background(sBackWater, -1);
+		
+	    _gravity = _gravity_water;
 		
 		// Slow down while entering the water
-		ysp = lerp(ysp, 0, water_enter_slow_down_factor)
+		ysp = lerp(ysp, 0, water_enter_slow_down_factor);
 		
 		if !is_swimming {
-			ysp *= water_enter_immediate_slow_down_factor
+			ysp *= water_enter_immediate_slow_down_factor;
 		}
 		
 		if (not global.animals[? current_animal].aquatic) {
-			in_water_steps_without_water_animal++
+			in_water_steps_without_water_animal++;
 			// Player dies if it used a non aquatic animal inside water for too long
 			if (in_water_steps_without_water_animal > in_water_steps_allowed_without_water_animal) {
-			    in_water_steps_without_water_animal = 0
-				die()
+			    in_water_steps_without_water_animal = 0;
+				die();
 			}
 		} else {
-			in_water_steps_without_water_animal = 0
+			in_water_steps_without_water_animal = 0;
 		}
 		
-		is_swimming = true
-		is_grounded = false
+		is_swimming = true;
+		is_grounded = false;
 		
 	} else {
-		_gravity = _gravity_normal
-		is_swimming = false
+		set_background(sBack, main_background_color);
+		_gravity = _gravity_normal;
+		is_swimming = false;
 		image_yscale = 1;
 	}
 }
@@ -448,6 +454,11 @@ function unstuck() {
 			}
 		}
 	}
+}
+
+function set_background(back, color) {
+	layer_background_change(background, back);
+	layer_background_blend(background, color);
 }
 
 function next_level() {

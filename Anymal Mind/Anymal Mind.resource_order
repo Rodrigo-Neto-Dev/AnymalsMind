@@ -1,6 +1,7 @@
 {
   "FolderOrderSettings":[
     {"name":"Effects","order":7,"path":"folders/Effects.yy",},
+    {"name":"Backgrounds","order":9,"path":"folders/Backgrounds.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},
@@ -10,12 +11,12 @@
     {"name":"Rooms","order":2,"path":"folders/Rooms.yy",},
     {"name":"Sprites","order":3,"path":"folders/Sprites.yy",},
     {"name":"Frog","order":12,"path":"folders/Sprites/Frog.yy",},
+    {"name":"Water","order":13,"path":"folders/Sprites/Water.yy",},
     {"name":"TransformationList","order":8,"path":"folders/TransformationList.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
     {"name":"How_to_use_it","order":6,"path":"notes/How_to_use_it/How_to_use_it.yy",},
-    {"name":"oBack","order":2,"path":"objects/oBack/oBack.yy",},
     {"name":"oFlag","order":1,"path":"objects/oFlag/oFlag.yy",},
     {"name":"oGameHandler","order":1,"path":"objects/oGameHandler/oGameHandler.yy",},
     {"name":"oLog","order":6,"path":"objects/oLog/oLog.yy",},
@@ -32,6 +33,7 @@
     {"name":"sndSelect","order":1,"path":"sounds/sndSelect/sndSelect.yy",},
     {"name":"sArrow","order":5,"path":"sprites/sArrow/sArrow.yy",},
     {"name":"sBack","order":1,"path":"sprites/sBack/sBack.yy",},
+    {"name":"sBackWater","order":2,"path":"sprites/sBackWater/sBackWater.yy",},
     {"name":"sLog1","order":9,"path":"sprites/sLog1/sLog1.yy",},
     {"name":"sP1Bear","order":7,"path":"sprites/sP1Bear/sP1Bear.yy",},
     {"name":"sP1Bird","order":5,"path":"sprites/sP1Bird/sP1Bird.yy",},
@@ -46,6 +48,5 @@
     {"name":"sPlayer","order":2,"path":"sprites/sPlayer/sPlayer.yy",},
     {"name":"sSolid","order":3,"path":"sprites/sSolid/sSolid.yy",},
     {"name":"sSpike","order":4,"path":"sprites/sSpike/sSpike.yy",},
-    {"name":"sWater","order":8,"path":"sprites/sWater/sWater.yy",},
   ],
 }
