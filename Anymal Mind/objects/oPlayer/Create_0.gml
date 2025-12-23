@@ -274,6 +274,7 @@ function aquatic_behavior() {
 		
 		if !is_swimming {
 			ysp *= water_enter_immediate_slow_down_factor;
+			instance_create_layer(x, y, "Effects", oWaterSplash);
 		}
 		
 		// Spawn bubble in random steps

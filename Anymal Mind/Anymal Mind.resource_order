@@ -57,5 +57,6 @@
     {"name":"sSolid","order":3,"path":"sprites/sSolid/sSolid.yy",},
     {"name":"sSpike","order":4,"path":"sprites/sSpike/sSpike.yy",},
     {"name":"sWaterBubble","order":2,"path":"sprites/sWaterBubble/sWaterBubble.yy",},
+    {"name":"sWaterSplash","order":2,"path":"sprites/sWaterSplash/sWaterSplash.yy",},
   ],
 }
