@@ -39,6 +39,9 @@ dash = ord("D");
 // UI state flag
 ui_show_animals = false;
 
+// Obstacles
+solid_objects = [oSolid, oExplodingBox];
+
 // Core animal transformation stuff
 current_animal = global.current_animal;
 sprite_index = global.current_animal_sprite;
@@ -64,7 +67,7 @@ steps_allowed_without_special = 240;
     is_swimming = false;
 	is_dashing = false;
 	water_enter_immediate_slow_down_factor = 0.4; // To reduce the falling speed of the player right when it enters the water
-	water_slow_down_factor = 0.02; // To slowly reduce the falling speed of the player in the water
+	water_slow_down_factor = 0.03; // To slowly reduce the falling speed of the player in the water
 	in_water_steps_without_water_animal = 0; // Current steps inside the water without a water animal
 	in_water_steps_allowed_without_water_animal = 60; // 2s - Max limit of steps inside the water without a water animal before the player dies
 	water_movement_slow_down_factor = 0.9; // To reduce the speed of the player bellow water
@@ -122,6 +125,7 @@ steps_allowed_without_special = 240;
 	dash_steps_until_next = 0;
 	dash_distance = 96;
 	dash_time = 3;
+	dash_direction = 0;
 #endregion
 
 #region CAT
@@ -228,7 +232,6 @@ function general_behavior() {
 	    is_grounded = true;
 		is_flying = false;
     }
-	unstuck();
 	if (not holding_any_movement_key()) {
 		is_idle = true;
 	}
@@ -454,7 +457,21 @@ function prepare_move() {
 }
 
 function execute_move() {
-	move_and_collide(xsp, ysp, oSolid);
+	if (is_dashing) {
+	    var boxes_dashed = ds_list_create();
+	    collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, false, true, boxes_dashed, true);
+	
+	    for (var i = 0; i < ds_list_size(boxes_dashed); i++) {
+		    with (ds_list_find_value(boxes_dashed, i)) {
+				show_debug_message(id);
+		        image_speed = 1; // Animate box explosion
+		    }
+	    }
+	
+	    ds_list_destroy(boxes_dashed);
+		move_and_collide(xsp, ysp, oSolid);
+	}
+	else move_and_collide(xsp, ysp, solid_objects);
 	
     if (is_climbing) {
 	    ysp = 0
@@ -467,6 +484,8 @@ function execute_move() {
     if place_meeting(x, y, oSpike) {
 	    die();
     }
+	
+	unstuck();
 }
 
 // Util functions
@@ -482,55 +501,55 @@ function prepare_background_music() {
 
 // To unstuck the animal if it gets stuck after transforming
 function unstuck() {
-	if (place_meeting(x, y, oSolid)) {
+	if (place_meeting(x, y, solid_objects)) {
 		for (var i = 1; i < 1000; i++) {
 			// Right
-			if (!place_meeting(x + i, y, oSolid)) {
+			if (!place_meeting(x + i, y, solid_objects)) {
 				x += i;
 				break;
 			}
 			
 			// Left
-			if (!place_meeting(x - i, y, oSolid)) {
+			if (!place_meeting(x - i, y, solid_objects)) {
 				x -= i;
 				break;
 			}
 			
 			// Up
-			if (!place_meeting(x, y - i, oSolid)) {
+			if (!place_meeting(x, y - i, solid_objects)) {
 				y -= i;
 				break;
 			}
 			
 			// Down
-			if (!place_meeting(x, y + i, oSolid)) {
+			if (!place_meeting(x, y + i, solid_objects)) {
 				y += i;
 				break;
 			}
 			
 			// Top right
-			if (!place_meeting(x + i, y - i, oSolid)) {
+			if (!place_meeting(x + i, y - i, solid_objects)) {
 				x += i;
 				y -= i;
 				break;
 			}
 			
 			// Top left
-			if (!place_meeting(x - i, y - i, oSolid)) {
+			if (!place_meeting(x - i, y - i, solid_objects)) {
 				x -= i;
 				y -= i;
 				break;
 			}
 			
 			// Bottom right
-			if (!place_meeting(x + i, y + i, oSolid)) {
+			if (!place_meeting(x + i, y + i, solid_objects)) {
 				x += i;
 				y += i;
 				break;
 			}
 			
 			// Bottom left
-			if (!place_meeting(x - i, y + i, oSolid)) {
+			if (!place_meeting(x - i, y + i, solid_objects)) {
 				x -= i;
 				y += i;
 				break;

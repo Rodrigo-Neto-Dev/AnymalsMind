@@ -20,6 +20,7 @@
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
     {"name":"How_to_use_it","order":6,"path":"notes/How_to_use_it/How_to_use_it.yy",},
+    {"name":"oExplodingBox","order":7,"path":"objects/oExplodingBox/oExplodingBox.yy",},
     {"name":"oFlag","order":1,"path":"objects/oFlag/oFlag.yy",},
     {"name":"oGameHandler","order":1,"path":"objects/oGameHandler/oGameHandler.yy",},
     {"name":"oLog","order":6,"path":"objects/oLog/oLog.yy",},
@@ -39,6 +40,7 @@
     {"name":"sArrow","order":5,"path":"sprites/sArrow/sArrow.yy",},
     {"name":"sBack","order":1,"path":"sprites/sBack/sBack.yy",},
     {"name":"sBackWater","order":2,"path":"sprites/sBackWater/sBackWater.yy",},
+    {"name":"sExplodingBox","order":14,"path":"sprites/sExplodingBox/sExplodingBox.yy",},
     {"name":"sLog1","order":9,"path":"sprites/sLog1/sLog1.yy",},
     {"name":"sP1Bear","order":7,"path":"sprites/sP1Bear/sP1Bear.yy",},
     {"name":"sP1Bird","order":5,"path":"sprites/sP1Bird/sP1Bird.yy",},

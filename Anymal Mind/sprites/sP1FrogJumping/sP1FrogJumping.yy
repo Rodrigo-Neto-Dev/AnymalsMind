@@ -1,11 +1,11 @@
 {
   "$GMSprite":"v2",
   "%Name":"sP1FrogJumping",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":23,
   "bbox_left":6,
   "bbox_right":24,
-  "bbox_top":3,
+  "bbox_top":10,
   "collisionKind":1,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
