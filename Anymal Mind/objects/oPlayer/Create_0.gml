@@ -272,7 +272,7 @@ function aquatic_behavior() {
 		// Slow down while in the water
 		ysp = lerp(ysp, 0, water_slow_down_factor);
 		
-		if !is_swimming {
+		if (!is_swimming) {
 			ysp *= water_enter_immediate_slow_down_factor;
 			instance_create_layer(x, y, "Effects", oWaterSplash);
 		}
@@ -460,7 +460,7 @@ function prepare_move() {
 function execute_move() {
 	if (is_dashing) {
 	    var boxes_dashed = ds_list_create();
-	    collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, false, true, boxes_dashed, true);
+	    collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, true, true, boxes_dashed, true);
 	
 	    for (var i = 0; i < ds_list_size(boxes_dashed); i++) {
 		    with (ds_list_find_value(boxes_dashed, i)) {
@@ -596,6 +596,7 @@ function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
+	audio_pause_sound(current_background_music);
 	room_goto_next();
 }
 
@@ -603,6 +604,7 @@ function die() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
+	audio_pause_sound(current_background_music);
 	room_persistent = false
 	room_restart();
 }
