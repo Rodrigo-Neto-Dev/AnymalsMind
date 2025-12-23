@@ -463,7 +463,6 @@ function execute_move() {
 	
 	    for (var i = 0; i < ds_list_size(boxes_dashed); i++) {
 		    with (ds_list_find_value(boxes_dashed, i)) {
-				show_debug_message(id);
 		        image_speed = 1; // Animate box explosion
 		    }
 	    }
@@ -565,8 +564,18 @@ function holding_any_movement_key() {
 function execute_dash() {
 	xsp = lengthdir_x(dash_speed, dash_direction);
 	ysp = lengthdir_y(dash_speed, dash_direction);
-	dash_energy -= dash_speed;
 	
+	// Trail effect
+	with (instance_create_depth(x, y, depth + 1, oDashTrail)) {
+		sprite_index = other.sprite_index;
+		image_index = other.image_index;
+		image_xscale = other.image_xscale;
+		image_yscale = other.image_yscale;
+		image_blend = c_white;
+		image_alpha = 0.7;
+	}
+	
+	dash_energy -= dash_speed;
 	if (dash_energy <= 0) {
 		is_dashing = false;
 	}

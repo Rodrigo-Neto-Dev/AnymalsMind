@@ -42,6 +42,7 @@
     {"id":{"name":"fn60","path":"fonts/fn60/fn60.yy",},},
     {"id":{"name":"How_to_use_it","path":"notes/How_to_use_it/How_to_use_it.yy",},},
     {"id":{"name":"oBack","path":"objects/oBack/oBack.yy",},},
+    {"id":{"name":"oDashTrail","path":"objects/oDashTrail/oDashTrail.yy",},},
     {"id":{"name":"oEffectSplash","path":"objects/oEffectSplash/oEffectSplash.yy",},},
     {"id":{"name":"oExplodingBox","path":"objects/oExplodingBox/oExplodingBox.yy",},},
     {"id":{"name":"oFlag","path":"objects/oFlag/oFlag.yy",},},

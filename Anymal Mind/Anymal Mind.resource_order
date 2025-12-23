@@ -20,6 +20,7 @@
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
     {"name":"How_to_use_it","order":6,"path":"notes/How_to_use_it/How_to_use_it.yy",},
+    {"name":"oDashTrail","order":8,"path":"objects/oDashTrail/oDashTrail.yy",},
     {"name":"oExplodingBox","order":7,"path":"objects/oExplodingBox/oExplodingBox.yy",},
     {"name":"oFlag","order":1,"path":"objects/oFlag/oFlag.yy",},
     {"name":"oGameHandler","order":1,"path":"objects/oGameHandler/oGameHandler.yy",},
