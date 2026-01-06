@@ -27,7 +27,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.1.210",
+    "IDEVersion":"2024.14.2.213",
   },
   "name":"Anymal Mind",
   "resources":[
@@ -66,6 +66,7 @@
     {"id":{"name":"sP1BirdAnim","path":"sprites/sP1BirdAnim/sP1BirdAnim.yy",},},
     {"id":{"name":"sP1Cat","path":"sprites/sP1Cat/sP1Cat.yy",},},
     {"id":{"name":"sP1Frog","path":"sprites/sP1Frog/sP1Frog.yy",},},
+    {"id":{"name":"sP1Griffon","path":"sprites/sP1Griffon/sP1Griffon.yy",},},
     {"id":{"name":"sP2","path":"sprites/sP2/sP2.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"sSolid","path":"sprites/sSolid/sSolid.yy",},},

@@ -32,7 +32,7 @@ execute_behaviors();
 	}
 #endregion
 
-#region GRIFFON -> BIRD + FROG
+#region GRIFFON -> BIRD + CAT
     if (current_animal == "Griffon") {
 		//
     }

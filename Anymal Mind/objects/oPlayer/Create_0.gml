@@ -110,7 +110,7 @@ function transform() {
 	}
 	if (keyboard_check_pressed(ord("5")) && (current_animal != "Griffon")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Bear; // sP1Griffon
+		sprite_index = sP1Griffon;
 		current_animal = "Griffon";
 	}
 	
