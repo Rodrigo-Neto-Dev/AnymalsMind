@@ -324,11 +324,14 @@ function climber_behavior() {
 // Movement
 
 function prepare_move() {
+	var water_rotation_angles = ds_list_create();
+	
 	if keyboard_check(left) {
 		image_xscale = -1; // Mirror image (turn left)
 		
 	    if (is_swimming) {
 			xsp = -1 * water_movement_slow_down_factor;
+			ds_list_add(water_rotation_angles, 180);
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
@@ -360,6 +363,7 @@ function prepare_move() {
 		
 	    if (is_swimming) {
 		    xsp = 1 * water_movement_slow_down_factor;
+			ds_list_add(water_rotation_angles, 0);
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
@@ -403,7 +407,7 @@ function prepare_move() {
 	if (keyboard_check(up)) {
 		if (is_swimming) {
 		    ysp = -1 * water_movement_slow_down_factor;
-			image_yscale = 1;
+			ds_list_add(water_rotation_angles, 90);
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
@@ -421,7 +425,7 @@ function prepare_move() {
 	if (keyboard_check(down)) {
 		if (is_swimming) {
 		    ysp = 1 * water_movement_slow_down_factor;
-			image_yscale = -1;
+			ds_list_add(water_rotation_angles, 270);
 			if (!is_idle) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
@@ -455,6 +459,10 @@ function prepare_move() {
 			execute_dash();
 		}
 	}
+	
+	// Underwater angle
+	update_angle_in_water(water_rotation_angles);
+	ds_list_destroy(water_rotation_angles);
 }
 
 function execute_move() {
@@ -580,6 +588,34 @@ function execute_dash() {
 	if (dash_energy <= 0) {
 		is_dashing = false;
 	}
+}
+
+function update_angle_in_water(water_rotation_angles) {
+	var mean_angle = 0.0;
+	var use_next_circle = false;
+	if (ds_list_find_index(water_rotation_angles, 0) != -1 and ds_list_find_index(water_rotation_angles, 270)) {
+		use_next_circle = true;
+	}
+	
+	for (var i = 0; i < ds_list_size(water_rotation_angles); i++) {
+		var angle = water_rotation_angles[| i];
+		if (angle != 270 and use_next_circle) {
+			angle += 360;
+		}
+		mean_angle += angle;
+	}
+	if (not ds_list_empty(water_rotation_angles)) {
+		mean_angle /= ds_list_size(water_rotation_angles);
+	}
+	
+	if (image_xscale = -1 and mean_angle != 0) {
+		mean_angle -= 180;
+	}
+	if (mean_angle >= 360 and use_next_circle) {
+		mean_angle -= 360;
+	}
+	
+	image_angle = mean_angle;
 }
 
 function set_background(back, color, sound) {
