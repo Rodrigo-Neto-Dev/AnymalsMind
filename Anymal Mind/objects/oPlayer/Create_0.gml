@@ -210,6 +210,7 @@ function transform() {
 	}
 	if (keyboard_check_pressed(animal5) && (current_animal != "Griffon")) {
 		transformation_cooldown = 120;
+		sprite_index = sP1Griffon;
 		current_animal = "Griffon";
 		current_animation_states = griffon_animation_states;
 	}

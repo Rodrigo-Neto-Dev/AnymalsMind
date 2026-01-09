@@ -34,13 +34,14 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.1.210",
+    "IDEVersion":"2024.14.2.213",
   },
   "name":"Anymal Mind",
   "resources":[
     {"id":{"name":"fn30","path":"fonts/fn30/fn30.yy",},},
     {"id":{"name":"fn60","path":"fonts/fn60/fn60.yy",},},
     {"id":{"name":"How_to_use_it","path":"notes/How_to_use_it/How_to_use_it.yy",},},
+    {"id":{"name":"Item","path":"objects/Item/Item.yy",},},
     {"id":{"name":"oBack","path":"objects/oBack/oBack.yy",},},
     {"id":{"name":"oDashTrail","path":"objects/oDashTrail/oDashTrail.yy",},},
     {"id":{"name":"oExplodingBox","path":"objects/oExplodingBox/oExplodingBox.yy",},},
@@ -85,6 +86,7 @@
     {"id":{"name":"sP1FrogJumping","path":"sprites/sP1FrogJumping/sP1FrogJumping.yy",},},
     {"id":{"name":"sP1FrogRunning","path":"sprites/sP1FrogRunning/sP1FrogRunning.yy",},},
     {"id":{"name":"sP1FrogSwimming","path":"sprites/sP1FrogSwimming/sP1FrogSwimming.yy",},},
+    {"id":{"name":"sP1Griffon","path":"sprites/sP1Griffon/sP1Griffon.yy",},},
     {"id":{"name":"sP2","path":"sprites/sP2/sP2.yy",},},
     {"id":{"name":"sPlayer","path":"sprites/sPlayer/sPlayer.yy",},},
     {"id":{"name":"sSolid","path":"sprites/sSolid/sSolid.yy",},},
