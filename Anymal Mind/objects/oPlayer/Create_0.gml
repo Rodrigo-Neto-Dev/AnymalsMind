@@ -139,11 +139,11 @@ steps_allowed_without_special = 240;
 
 #region GRIFFON
     griffon_animation_states = ds_map_create();
-	ds_map_add(griffon_animation_states, "idle", sP1Bear);
-	ds_map_add(griffon_animation_states, "special", sP1Bear);
-	ds_map_add(griffon_animation_states, "running", sP1Bear);
-	ds_map_add(griffon_animation_states, "jumping", sP1Bear);
-	ds_map_add(griffon_animation_states, "swimming", sP1Bear);
+	ds_map_add(griffon_animation_states, "idle", sP1Griffon);
+	ds_map_add(griffon_animation_states, "special", sP1Griffon);
+	ds_map_add(griffon_animation_states, "running", sP1Griffon);
+	ds_map_add(griffon_animation_states, "jumping", sP1Griffon);
+	ds_map_add(griffon_animation_states, "swimming", sP1Griffon);
 #endregion
 
 // ---------------------------------------------------------------------- //
@@ -210,7 +210,6 @@ function transform() {
 	}
 	if (keyboard_check_pressed(animal5) && (current_animal != "Griffon")) {
 		transformation_cooldown = 120;
-		sprite_index = sP1Griffon;
 		current_animal = "Griffon";
 		current_animation_states = griffon_animation_states;
 	}
