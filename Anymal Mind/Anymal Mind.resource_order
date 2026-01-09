@@ -14,6 +14,7 @@
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
     {"name":"How_to_use_it","order":6,"path":"notes/How_to_use_it/How_to_use_it.yy",},
+    {"name":"Item","order":7,"path":"objects/Item/Item.yy",},
     {"name":"oBack","order":2,"path":"objects/oBack/oBack.yy",},
     {"name":"oFlag","order":1,"path":"objects/oFlag/oFlag.yy",},
     {"name":"oGameHandler","order":1,"path":"objects/oGameHandler/oGameHandler.yy",},
