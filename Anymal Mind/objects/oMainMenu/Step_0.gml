@@ -1,8 +1,8 @@
 /// @description Actions
 
 if global.reset_all_rooms[0] {
-	global.reset_all_rooms[0] = false
-	room_goto(2)
+	global.reset_all_rooms[0] = false;
+	room_goto(2);
 }
 
 // change menu item selected
@@ -27,8 +27,8 @@ if keyboard_check_pressed(menu_confirmation_buttom) {
 		case 1:	// Load Game 
 			room_goto(asset_get_index(global.room_save))
 			break;
-		case 2:	// Config 
-			// add code of what to do when confirming this item
+		case 2:	// Controls
+			show_controls_ui = true;
 			break;
 		case 3: // Credits
 			// add code of what to do when confirming this item

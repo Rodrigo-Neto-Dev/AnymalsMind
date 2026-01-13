@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"discoverAnimal",
+  "%Name":"controlMenu",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"discoverAnimal",
+  "name":"controlMenu",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

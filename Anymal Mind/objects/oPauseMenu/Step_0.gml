@@ -19,8 +19,8 @@ if keyboard_check_pressed(menu_confirmation_buttom) {
 		case 0:	// Continue
 			room_goto(global.room_save)
 			break;
-		case 1:	// Config
-			// add code of what to do when confirming this item
+		case 1:	// Controls
+			show_pause_controls_ui = true;
 			break;
 		case 2: // Save & Quit
 			room_goto(room_first)

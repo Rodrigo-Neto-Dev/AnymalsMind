@@ -1,5 +1,3 @@
-window_set_size(1280, 720);
-
 icon_x = 1272;
 icon_y = 16;
 icon_size = 32;
@@ -39,7 +37,7 @@ animal3 = ord("3");
 animal4 = ord("4");
 animal5 = ord("5");
 
-dash = ord("H");
+dash = ord("E");
 
 // UI state flag
 ui_show_animals = false;

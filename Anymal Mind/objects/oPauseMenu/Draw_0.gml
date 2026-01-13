@@ -1,5 +1,13 @@
 /// @description Draw menu items
 
+if (show_pause_controls_ui) {
+	open_control_menu();
+	if (keyboard_check_pressed(vk_escape)) {
+		show_pause_controls_ui = false;
+	}
+	return;
+}
+
 // draw title
 shadowed_text(title_text, room_width / 2, 20, title_font, fa_center, fa_top, title_shadow_offset, title_color, title_shadow_color, 1, title_shadow_alpha);
 

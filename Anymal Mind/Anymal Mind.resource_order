@@ -4,6 +4,7 @@
     {"name":"Effects","order":7,"path":"folders/Effects.yy",},
     {"name":"WaterBubble","order":2,"path":"folders/Effects/WaterBubble.yy",},
     {"name":"WaterSplash","order":1,"path":"folders/Effects/WaterSplash.yy",},
+    {"name":"Scripts","order":12,"path":"folders/Scripts.yy",},
     {"name":"Handlers","order":6,"path":"folders/Handlers.yy",},
     {"name":"MainMenu","order":4,"path":"folders/MainMenu.yy",},
     {"name":"Sounds","order":1,"path":"folders/MainMenu/Sounds.yy",},
@@ -15,7 +16,6 @@
     {"name":"Sprites","order":3,"path":"folders/Sprites.yy",},
     {"name":"Frog","order":12,"path":"folders/Sprites/Frog.yy",},
     {"name":"Water","order":13,"path":"folders/Sprites/Water.yy",},
-    {"name":"TransformationList","order":8,"path":"folders/TransformationList.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"fn60","order":1,"path":"fonts/fn60/fn60.yy",},
@@ -38,6 +38,7 @@
     {"name":"r2","order":2,"path":"rooms/r2/r2.yy",},
     {"name":"rMainMenu","order":3,"path":"rooms/rMainMenu/rMainMenu.yy",},
     {"name":"rPersistence","order":3,"path":"rooms/rPersistence/rPersistence.yy",},
+    {"name":"controlMenu","order":1,"path":"scripts/controlMenu/controlMenu.yy",},
     {"name":"sndMain","order":1,"path":"sounds/sndMain/sndMain.yy",},
     {"name":"sndSelect","order":1,"path":"sounds/sndSelect/sndSelect.yy",},
     {"name":"sArrow","order":5,"path":"sprites/sArrow/sArrow.yy",},
