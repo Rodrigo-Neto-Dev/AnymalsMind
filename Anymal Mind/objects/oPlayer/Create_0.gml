@@ -24,6 +24,11 @@ up = vk_up;
 down = vk_down;
 left = vk_left;
 right = vk_right;
+up_wasd = ord("W");
+down_wasd = ord("S");
+left_wasd = ord("A");
+right_wasd = ord("D");
+
 left_released = false
 right_released = false;
 
@@ -34,7 +39,7 @@ animal3 = ord("3");
 animal4 = ord("4");
 animal5 = ord("5");
 
-dash = ord("D");
+dash = ord("H");
 
 // UI state flag
 ui_show_animals = false;
@@ -257,7 +262,7 @@ function aerial_behavior() {
 	    aerial_jumps = 3;
     }
 	
-	if (keyboard_check_pressed(up) && !is_grounded) {
+	if (movement_check("up", "pressed") && !is_grounded) {
 		is_flying = true;
 	}
 }
@@ -326,7 +331,7 @@ function climber_behavior() {
 function prepare_move() {
 	var water_rotation_angles = ds_list_create();
 	
-	if keyboard_check(left) {
+	if (movement_check("left", "hold")) {
 		image_xscale = -1; // Mirror image (turn left)
 		
 	    if (is_swimming) {
@@ -345,7 +350,7 @@ function prepare_move() {
 	    }
     }
 	
-	if (keyboard_check_released(left)) {
+	if (movement_check("left", "released")) {
 		if (is_swimming) {
 			left_released = true;
 		}
@@ -358,7 +363,7 @@ function prepare_move() {
 		}
 	}
 
-    if keyboard_check(right) {
+    if (movement_check("right", "hold")) {
 		image_xscale = 1; // Turn right
 		
 	    if (is_swimming) {
@@ -377,7 +382,7 @@ function prepare_move() {
 	    }
     }
 	
-	if (keyboard_check_released(right)) {
+	if (movement_check("right", "released")) {
 		if (is_swimming) {
 			right_released = true;
 		}
@@ -390,7 +395,7 @@ function prepare_move() {
 		}
 	}
 
-    if ( keyboard_check_pressed(up) ) {
+    if (movement_check("up", "pressed")) {
 	    if ( is_grounded == true ){
 		    ysp = -2 * _gravity;
 		    is_grounded = false;
@@ -403,8 +408,7 @@ function prepare_move() {
 	    }
     }
 	
-	// If it is being hold
-	if (keyboard_check(up)) {
+	if (movement_check("up", "hold")) {
 		if (is_swimming) {
 		    ysp = -1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 90);
@@ -417,12 +421,11 @@ function prepare_move() {
 	    }
 	}
 
-    if ( keyboard_check_pressed(down) ) {
+    if (movement_check("down", "pressed")) {
 	    //
     }
 	
-	// If it is being hold
-	if (keyboard_check(down)) {
+	if (movement_check("down", "hold")) {
 		if (is_swimming) {
 		    ysp = 1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 270);
@@ -567,7 +570,29 @@ function unstuck() {
 }
 
 function holding_any_movement_key() {
-	return keyboard_check(up) || keyboard_check(down) || keyboard_check(left) || keyboard_check(right);
+	return movement_check("up", "hold") || movement_check("down", "hold") || movement_check("left", "hold") || movement_check("right", "hold");
+}
+
+function movement_check(dir_string, type_string) {
+	var dir = string_upper(dir_string);
+	var type = string_upper(type_string);
+	var move_func;
+	
+	switch (type) {
+		case "HOLD": move_func = keyboard_check; break;
+		case "PRESSED": move_func = keyboard_check_pressed; break;
+		case "RELEASED": move_func = keyboard_check_released; break;
+		default: move_func = keyboard_check; break;
+	}
+	
+	switch (dir) {
+		case "UP": return move_func(up) or move_func(up_wasd);
+		case "DOWN": return move_func(down) or move_func(down_wasd);
+		case "LEFT": return move_func(left) or move_func(left_wasd);
+		case "RIGHT": return move_func(right) or move_func(right_wasd);
+	}
+	
+	return false;
 }
 
 function execute_dash() {
