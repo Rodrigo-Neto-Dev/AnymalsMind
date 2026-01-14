@@ -51,8 +51,6 @@ sprite_index = global.current_animal_sprite;
 current_animation_states = global.current_animation_states;
 transformation_cooldown = 0;
 
-is_idle = true;
-is_grounded = true;
 // For animal special animations
 steps_without_special = 0;
 steps_allowed_without_special = 240;
@@ -60,15 +58,12 @@ steps_allowed_without_special = 240;
 // Specific animal transformation stuff
 
 #region AERIAL
-    is_flying = false;
     aerial_jumps = 3;
     aerial_jump_timer = 0;
 #endregion
 
 #region AQUATIC
 	_gravity_water = 0;
-    is_swimming = false;
-	is_dashing = false;
 	water_enter_immediate_slow_down_factor = 0.4; // To reduce the falling speed of the player right when it enters the water
 	water_slow_down_factor = 0.03; // To slowly reduce the falling speed of the player in the water
 	in_water_steps_without_water_animal = 0; // Current steps inside the water without a water animal
@@ -77,7 +72,6 @@ steps_allowed_without_special = 240;
 #endregion
 
 #region CLIMBER
-    is_climbing = false
     left_wall = false
     rigth_wall = false
 	wall_jump_speed_factor = 10 // To make a quick jump out of climbing mode
@@ -232,20 +226,20 @@ function execute_behaviors() {
 function general_behavior() {
 	if place_meeting(x, y+1, oSolid) {
 	    ysp = 0;
-	    is_grounded = true;
-		is_flying = false;
+	    addP1State(P1State.GROUNDED);
+		delP1State(P1State.FLYING);
     }
 	if (not holding_any_movement_key()) {
-		is_idle = true;
+		addP1State(P1State.IDLE);
 	}
 	else {
-		is_idle = false;
+		delP1State(P1State.IDLE);
 	}
 }
 
 function aerial_behavior() {
 	if (not global.animals[? current_animal].aerial) {
-		is_flying = false;
+		delP1State(P1State.FLYING);
 		aerial_jumps = 3;
 		aerial_jump_timer = 0;
 		return;
@@ -256,12 +250,12 @@ function aerial_behavior() {
     }
 	
 	if place_meeting(x, y+1, oSolid) {
-		is_flying = false;
+		delP1State(P1State.FLYING);
 	    aerial_jumps = 3;
     }
 	
-	if (movement_check("up", "pressed") && !is_grounded) {
-		is_flying = true;
+	if (movement_check("up", "pressed") && !containsP1State(P1State.GROUNDED)) {
+		addP1State(P1State.FLYING);
 	}
 }
 
@@ -275,7 +269,7 @@ function aquatic_behavior() {
 		// Slow down while in the water
 		ysp = lerp(ysp, 0, water_slow_down_factor);
 		
-		if (!is_swimming) {
+		if (!containsP1State(P1State.SWIMMING)) {
 			ysp *= water_enter_immediate_slow_down_factor;
 			instance_create_layer(x, y, "Effects", oWaterSplash);
 		}
@@ -297,19 +291,18 @@ function aquatic_behavior() {
 			if (dash_steps_until_next > 0) dash_steps_until_next--; // Needs more time until next dash
 		}
 		
-		is_swimming = true;
-		is_grounded = false;
+		addP1State(P1State.SWIMMING);
+		delP1State(P1State.GROUNDED);
 		
 	} else {
 		set_background(sBack, main_background_color, sndMain);
 		_gravity = _gravity_normal;
-		is_swimming = false;
-		image_yscale = 1;
+		delP1State(P1State.SWIMMING);
 	}
 }
 
 function climber_behavior() {
-	is_climbing = false;
+	delP1State(P1State.CLIMBING);
 	
 	if (not global.animals[? current_animal].climber) return;
 
@@ -317,8 +310,8 @@ function climber_behavior() {
     right_wall = place_meeting(x + 1, y, oSolid);
 	
 	if (left_wall || right_wall) {
-		is_climbing = true;
-		is_grounded = false;
+		addP1State(P1State.CLIMBING);
+		delP1State(P1State.GROUNDED);
 		_gravity = 0;
 		aerial_jumps = 3;
 	}
@@ -332,14 +325,14 @@ function prepare_move() {
 	if (movement_check("left", "hold")) {
 		image_xscale = -1; // Mirror image (turn left)
 		
-	    if (is_swimming) {
+	    if (containsP1State(P1State.SWIMMING)) {
 			xsp = -1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 180);
-			if (!is_idle) {
+			if (!containsP1State(P1State.IDLE)) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
 	    }
-	    else if (is_climbing && right_wall) {
+	    else if (containsP1State(P1State.CLIMBING) && right_wall) {
 		    xsp = -1 * wall_jump_speed_factor;
 	    }
 	    else {
@@ -349,7 +342,7 @@ function prepare_move() {
     }
 	
 	if (movement_check("left", "released")) {
-		if (is_swimming) {
+		if (containsP1State(P1State.SWIMMING)) {
 			left_released = true;
 		}
 	}
@@ -364,14 +357,14 @@ function prepare_move() {
     if (movement_check("right", "hold")) {
 		image_xscale = 1; // Turn right
 		
-	    if (is_swimming) {
+	    if (containsP1State(P1State.SWIMMING)) {
 		    xsp = 1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 0);
-			if (!is_idle) {
+			if (!containsP1State(P1State.IDLE)) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
 	    }
-	    else if (is_climbing && left_wall) {
+	    else if (containsP1State(P1State.CLIMBING) && left_wall) {
 		    xsp = 1 * wall_jump_speed_factor;
 	    }
 	    else {
@@ -381,7 +374,7 @@ function prepare_move() {
     }
 	
 	if (movement_check("right", "released")) {
-		if (is_swimming) {
+		if (containsP1State(P1State.SWIMMING)) {
 			right_released = true;
 		}
 	}
@@ -394,12 +387,12 @@ function prepare_move() {
 	}
 
     if (movement_check("up", "pressed")) {
-	    if ( is_grounded == true ){
+	    if (containsP1State(P1State.GROUNDED)) {
 		    ysp = -2 * _gravity;
-		    is_grounded = false;
+		    delP1State(P1State.GROUNDED);
 			sprite_index = current_animation_states[? "jumping"];
 	    }
-	    else if ( is_flying && !is_swimming && !is_climbing && aerial_jump_timer == 0 && aerial_jumps > 0 ) {
+	    else if (containsP1State(P1State.FLYING) && !containsP1State(P1State.SWIMMING) && !containsP1State(P1State.CLIMBING) && aerial_jump_timer == 0 && aerial_jumps > 0 ) {
 		    ysp = -2 * _gravity;
 		    aerial_jump_timer += 10;
 		    aerial_jumps--;
@@ -407,14 +400,14 @@ function prepare_move() {
     }
 	
 	if (movement_check("up", "hold")) {
-		if (is_swimming) {
+		if (containsP1State(P1State.SWIMMING)) {
 		    ysp = -1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 90);
-			if (!is_idle) {
+			if (!containsP1State(P1State.IDLE)) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
 	    }
-		else if (is_climbing) {
+		else if (containsP1State(P1State.CLIMBING)) {
 		    ysp = -1
 	    }
 	}
@@ -424,20 +417,20 @@ function prepare_move() {
     }
 	
 	if (movement_check("down", "hold")) {
-		if (is_swimming) {
+		if (containsP1State(P1State.SWIMMING)) {
 		    ysp = 1 * water_movement_slow_down_factor;
 			ds_list_add(water_rotation_angles, 270);
-			if (!is_idle) {
+			if (!containsP1State(P1State.IDLE)) {
 				sprite_index = current_animation_states[? "swimming"];
 			}
 		}
-		else if (is_climbing) {
+		else if (P1State.CLIMBING) {
 		    ysp = 1
 	    }
 	}
 	
 	// Idle
-	if (is_idle) {
+	if (containsP1State(P1State.IDLE)) {
 		sprite_index = current_animation_states[? "idle"];
 		steps_without_special++;
 		
@@ -451,9 +444,9 @@ function prepare_move() {
 	
 	// Underwater dash
 	if (keyboard_check_pressed(dash) && holding_any_movement_key()) {
-		if (is_swimming && dash_steps_until_next == 0) {
+		if (containsP1State(P1State.SWIMMING) && dash_steps_until_next == 0) {
 			dash_steps_until_next = dash_cooldown;
-			is_dashing = true;
+			addP1State(P1State.DASHING);
 			dash_direction = point_direction(0, 0, keyboard_check(right) - keyboard_check(left), keyboard_check(down) - keyboard_check(up));
 			dash_speed = dash_distance / dash_time;
 			dash_energy = dash_distance;
@@ -467,7 +460,7 @@ function prepare_move() {
 }
 
 function execute_move() {
-	if (is_dashing) {
+	if (containsP1State(P1State.DASHING)) {
 	    var boxes_dashed = ds_list_create();
 	    collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, true, true, boxes_dashed, true);
 	
@@ -482,7 +475,7 @@ function execute_move() {
 	}
 	else move_and_collide(xsp, ysp, solid_objects);
 	
-    if (is_climbing) {
+    if (containsP1State(P1State.CLIMBING)) {
 	    ysp = 0
     }
 
@@ -609,7 +602,7 @@ function execute_dash() {
 	
 	dash_energy -= dash_speed;
 	if (dash_energy <= 0) {
-		is_dashing = false;
+		delP1State(P1State.DASHING);
 	}
 }
 

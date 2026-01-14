@@ -1,9 +1,9 @@
 ysp += 0.1 * _gravity;
-if (!is_swimming) {
+if (!containsP1State(P1State.SWIMMING)) {
 	xsp = 0;
-	if (is_dashing) {
+	if (containsP1State(P1State.DASHING)) {
 		ysp = 0;
-		is_dashing = false;
+		delP1State(P1State.DASHING);
 	}
 }
 
