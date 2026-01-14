@@ -655,6 +655,7 @@ function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
+	global.current_level++;
 	audio_pause_sound(current_background_music);
 	room_goto_next();
 }
@@ -666,4 +667,17 @@ function die() {
 	audio_pause_sound(current_background_music);
 	room_persistent = false
 	room_restart();
+	dec_lives();
+}
+
+function dec_lives() {
+	global.lives--;
+	if (global.lives == 0) {
+		game_over();
+	}
+}
+
+function game_over() {
+	room_goto(0);
+	game_restart();
 }

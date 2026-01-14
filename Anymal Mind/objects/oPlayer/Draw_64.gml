@@ -1,33 +1,36 @@
-draw_set_color(c_white);
-draw_rectangle(icon_x, icon_y, icon_x + icon_size, icon_y + icon_size, false);
-draw_text(icon_x + 8, icon_y + 8, "B"); // or draw an icon
-
 if (ui_show_animals) {
     // Semi-transparent or non-transparent dark background
     draw_set_color(c_black);
-    draw_set_alpha(0.70); // adjust to taste
+    draw_set_alpha(0.70);
     draw_rectangle(0, 0, display_get_gui_width(), display_get_gui_height(), false);
     draw_set_alpha(1);
 
     // Title
     draw_set_color(c_white);
-    draw_text(24, 24, "Transformations:");
+	var title = "Transformations:"
+	var title_width = string_width(title);
+	var title_height = string_height(title);
+    text(title, title_width / 2, 20 + title_height / 2, fn30, fa_center, fa_center, c_white, 1);
 
     // List entries
-    var yy = 60;
+	var xx = 0;
+    var yy = 20 + 1.5 * title_height;
+	var entry_height = 0;
 	
     for (var i = 0; i < array_length(global.animal_names); i++) {
 		var name = global.animal_names[i];
 		var a = global.animals[? name];
 
         if (a.discovered) {
-            draw_set_color(c_lime);
-            draw_text(40, yy, name);
+			xx = string_width(name);
+			entry_height = string_height(name);
+            text(name, xx / 2, yy + entry_height / 2, fn30, fa_center, fa_center, c_lime, 1);
         } else {
-            draw_set_color(c_orange);
-            draw_text(40, yy, "???");
+			xx = string_width("???");
+			entry_height = string_height("???");
+            text("???", xx / 2, yy + entry_height / 2, fn30, fa_center, fa_center, c_orange, 1);
         }
 
-        yy += 28;
+        yy += entry_height - 15;
     }
 }
