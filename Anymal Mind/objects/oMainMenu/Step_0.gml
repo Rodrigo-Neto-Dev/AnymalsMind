@@ -24,7 +24,7 @@ if keyboard_check_pressed(menu_confirmation_buttom) {
 		case 0:	// New Game
 			game_restart()
 			break;
-		case 1:	// Load Game 
+		case 1:	// Load Game
 			room_goto(asset_get_index(global.room_save))
 			break;
 		case 2:	// Controls

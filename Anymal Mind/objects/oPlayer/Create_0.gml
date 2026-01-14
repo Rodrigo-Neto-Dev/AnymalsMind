@@ -8,11 +8,6 @@ ysp = 0;
 _gravity_normal = 1
 _gravity = _gravity_normal
 
-background = layer_background_get_id(layer_get_id("Background"));
-main_background_color = #28FF33;
-current_background_music = sndMain;
-prepare_background_music();
-
 // Controls
 
 open_pause_menu = ord("P");
@@ -262,8 +257,6 @@ function aerial_behavior() {
 function aquatic_behavior() {
     if place_meeting(x, y, oWater) {
 		
-		set_background(sBackWater, -1, sndWater);
-		
 	    _gravity = _gravity_water;
 		
 		// Slow down while in the water
@@ -295,7 +288,6 @@ function aquatic_behavior() {
 		delP1State(P1State.GROUNDED);
 		
 	} else {
-		set_background(sBack, main_background_color, sndMain);
 		_gravity = _gravity_normal;
 		delP1State(P1State.SWIMMING);
 	}
@@ -492,15 +484,6 @@ function execute_move() {
 
 // Util functions
 
-function prepare_background_music() {
-	// Play
-	audio_play_sound(sndMain, 10, true);
-	audio_play_sound(sndWater, 10, true);
-	
-	// Pause
-	audio_pause_sound(sndWater);
-}
-
 // To unstuck the animal if it gets stuck after transforming
 function unstuck() {
 	if (place_meeting(x, y, solid_objects)) {
@@ -634,22 +617,11 @@ function update_angle_in_water(water_rotation_angles) {
 	image_angle = mean_angle;
 }
 
-function set_background(back, color, sound) {
-	layer_background_change(background, back);
-	layer_background_blend(background, color);
-	if (current_background_music != sound) {
-		audio_pause_sound(current_background_music);
-		audio_resume_sound(sound);
-	    current_background_music = sound;
-	}
-}
-
 function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
 	global.current_level++;
-	audio_pause_sound(current_background_music);
 	room_goto_next();
 }
 
@@ -657,7 +629,6 @@ function die() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
-	audio_pause_sound(current_background_music);
 	room_persistent = false
 	room_restart();
 	dec_lives();
