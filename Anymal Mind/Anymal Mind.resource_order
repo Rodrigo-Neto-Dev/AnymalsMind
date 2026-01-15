@@ -49,6 +49,7 @@
     {"name":"sndSelect","order":1,"path":"sounds/sndSelect/sndSelect.yy",},
     {"name":"sArrow","order":5,"path":"sprites/sArrow/sArrow.yy",},
     {"name":"sBack","order":1,"path":"sprites/sBack/sBack.yy",},
+    {"name":"sBackForest","order":3,"path":"sprites/sBackForest/sBackForest.yy",},
     {"name":"sBackWater","order":2,"path":"sprites/sBackWater/sBackWater.yy",},
     {"name":"sElephantIcon","order":15,"path":"sprites/sElephantIcon/sElephantIcon.yy",},
     {"name":"sExplodingBox","order":14,"path":"sprites/sExplodingBox/sExplodingBox.yy",},

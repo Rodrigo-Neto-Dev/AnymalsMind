@@ -5,8 +5,8 @@ global.room_save = room;
 background = layer_background_get_id(layer_get_id("Background"));
 current_music = sndMain;
 
-main_back = sBack;
-main_back_color = #28FF33;
+main_back = sBackForest;
+main_back_color = -1;
 main_music = sndMain;
 
 water_back = sBackWater;

@@ -79,6 +79,7 @@
     {"id":{"name":"sndWater","path":"sounds/sndWater/sndWater.yy",},},
     {"id":{"name":"sArrow","path":"sprites/sArrow/sArrow.yy",},},
     {"id":{"name":"sBack","path":"sprites/sBack/sBack.yy",},},
+    {"id":{"name":"sBackForest","path":"sprites/sBackForest/sBackForest.yy",},},
     {"id":{"name":"sBackWater","path":"sprites/sBackWater/sBackWater.yy",},},
     {"id":{"name":"sElephantIcon","path":"sprites/sElephantIcon/sElephantIcon.yy",},},
     {"id":{"name":"sExplodingBox","path":"sprites/sExplodingBox/sExplodingBox.yy",},},
