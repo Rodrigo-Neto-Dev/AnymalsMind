@@ -12,6 +12,9 @@ main_music = sndMain;
 water_back = sBackWater;
 water_back_color = -1;
 water_music = sndWater;
+in_water = false;
+water_transparent_alpha = 0.2;
+water_opaque_alpha = 1;
 
 prepare_background_music();
 
@@ -34,5 +37,12 @@ function set_background(back, back_color, music) {
 	    audio_pause_sound(current_music);
 		audio_resume_sound(music);
 	    current_music = music;
+	}
+}
+
+function set_water_alpha(alpha) {
+	with (oWater) {
+		show_debug_message(alpha);
+	    image_alpha = alpha;
 	}
 }

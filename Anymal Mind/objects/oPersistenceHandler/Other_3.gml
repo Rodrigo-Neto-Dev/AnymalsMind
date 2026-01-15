@@ -1,3 +1,5 @@
+clear_selected_animals();
+
 for (var i = 0; i < room_last; i++) {
 	room_goto_next()
 	room_persistent = false

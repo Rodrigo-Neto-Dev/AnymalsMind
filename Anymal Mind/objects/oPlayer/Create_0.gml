@@ -8,43 +8,16 @@ ysp = 0;
 _gravity_normal = 1
 _gravity = _gravity_normal
 
-// Controls
-
-open_pause_menu = ord("P");
-open_inventory = ord("B");
-
-up = vk_up;
-down = vk_down;
-left = vk_left;
-right = vk_right;
-up_wasd = ord("W");
-down_wasd = ord("S");
-left_wasd = ord("A");
-right_wasd = ord("D");
-
 left_released = false
 right_released = false;
 
-animal0 = ord("0");
-animal1 = ord("1");
-animal2 = ord("2");
-animal3 = ord("3");
-animal4 = ord("4");
-animal5 = ord("5");
-
-dash = ord("E");
-
 // UI state flag
 ui_show_animals = false;
-
-// Obstacles
-solid_objects = [oSolid, oExplodingBox];
 
 // Core animal transformation stuff
 current_animal = global.current_animal;
 sprite_index = global.current_animal_sprite;
 current_animation_states = global.current_animation_states;
-transformation_cooldown = 0;
 
 // For animal special animations
 steps_without_special = 0;
@@ -138,6 +111,14 @@ steps_allowed_without_special = 240;
 	ds_map_add(griffon_animation_states, "swimming", sP1Griffon);
 #endregion
 
+animal_to_animation_states = ds_map_create();
+ds_map_add(animal_to_animation_states, "Human", human_animation_states);
+ds_map_add(animal_to_animation_states, "Bird", bird_animation_states);
+ds_map_add(animal_to_animation_states, "Bear", bear_animation_states);
+ds_map_add(animal_to_animation_states, "Frog", frog_animation_states);
+ds_map_add(animal_to_animation_states, "Cat", cat_animation_states);
+ds_map_add(animal_to_animation_states, "Griffon", griffon_animation_states);
+
 // ---------------------------------------------------------------------- //
 
 // Step functions
@@ -147,11 +128,11 @@ function set_camera() {
 }
 
 function check_menus() {
-	if keyboard_check_pressed(open_pause_menu) {
+	if (keyboard_check_pressed(key_open_pause_menu())) {
 	    room_goto(1);
     }
 
-    if (keyboard_check_pressed(open_inventory)) {
+    if (keyboard_check_pressed(key_open_inventory())) {
         ui_show_animals = !ui_show_animals;
     }
 }
@@ -160,7 +141,7 @@ function check_mouse() {
 	var mx = device_mouse_x_to_gui(0);
     var my = device_mouse_y_to_gui(0);
 
-    if (mouse_check_button_pressed(mb_left)) {
+    if (mouse_check_button_pressed(key_ui_interact())) {
         if (point_in_rectangle(mx, my, icon_x, icon_y, icon_x + icon_size, icon_y + icon_size)) {
             ui_show_animals = !ui_show_animals;
         }
@@ -170,41 +151,11 @@ function check_mouse() {
 // Transform
 
 function transform() {
-	if (transformation_cooldown > 0) {
-	    transformation_cooldown -= 1;
-    }
-	if (transformation_cooldown > 0) return;
+	var player_animal = get_player_current_animal();
+	if (player_animal == current_animal) return;
 	
-	if (keyboard_check_pressed(animal0) && (current_animal != "Human")) {
-		transformation_cooldown = 120;
-		current_animal = "Human";
-		current_animation_states = human_animation_states;
-	}
-    if (keyboard_check_pressed(animal1) && (current_animal != "Bird")) {
-		transformation_cooldown = 120;
-		current_animal = "Bird";
-		current_animation_states = bird_animation_states;
-	}
-	if (keyboard_check_pressed(animal2) && (current_animal != "Bear")) {
-		transformation_cooldown = 120;
-		current_animal = "Bear";
-		current_animation_states = bear_animation_states;
-	}
-	if (keyboard_check_pressed(animal3) && (current_animal != "Frog")) {
-		transformation_cooldown = 120;
-		current_animal = "Frog";
-		current_animation_states = frog_animation_states;
-	}
-	if (keyboard_check_pressed(animal4) && (current_animal != "Cat")) {
-		transformation_cooldown = 120;
-		current_animal = "Cat";
-		current_animation_states = cat_animation_states;
-	}
-	if (keyboard_check_pressed(animal5) && (current_animal != "Griffon")) {
-		transformation_cooldown = 120;
-		current_animal = "Griffon";
-		current_animation_states = griffon_animation_states;
-	}
+	current_animal = player_animal;
+	current_animation_states = animal_to_animation_states[? player_animal];
 	
 	discover_animal(current_animal);
 }
@@ -435,11 +386,11 @@ function prepare_move() {
 	}
 	
 	// Underwater dash
-	if (keyboard_check_pressed(dash) && holding_any_movement_key()) {
+	if (keyboard_check_pressed(key_dash()) && holding_any_movement_key()) {
 		if (containsP1State(P1State.SWIMMING) && dash_steps_until_next == 0) {
 			dash_steps_until_next = dash_cooldown;
 			addP1State(P1State.DASHING);
-			dash_direction = point_direction(0, 0, keyboard_check(right) - keyboard_check(left), keyboard_check(down) - keyboard_check(up));
+			dash_direction = point_direction(0, 0, keyboard_check(key_right()) - keyboard_check(key_left()), keyboard_check(key_down()) - keyboard_check(key_up()));
 			dash_speed = dash_distance / dash_time;
 			dash_energy = dash_distance;
 			execute_dash();
@@ -447,7 +398,7 @@ function prepare_move() {
 	}
 	
 	// Underwater angle
-	update_angle_in_water(water_rotation_angles);
+	image_angle = get_angle_in_water(water_rotation_angles, image_xscale);
 	ds_list_destroy(water_rotation_angles);
 }
 
@@ -465,7 +416,7 @@ function execute_move() {
 	    ds_list_destroy(boxes_dashed);
 		move_and_collide(xsp, ysp, oSolid);
 	}
-	else move_and_collide(xsp, ysp, solid_objects);
+	else move_and_collide(xsp, ysp, get_obstacles());
 	
     if (containsP1State(P1State.CLIMBING)) {
 	    ysp = 0
@@ -479,95 +430,12 @@ function execute_move() {
 	    die();
     }
 	
-	unstuck();
+	var player_coords = unstuck(x, y);
+	x = player_coords[0];
+	y = player_coords[1];
 }
 
-// Util functions
-
-// To unstuck the animal if it gets stuck after transforming
-function unstuck() {
-	if (place_meeting(x, y, solid_objects)) {
-		for (var i = 1; i < 1000; i++) {
-			// Right
-			if (!place_meeting(x + i, y, solid_objects)) {
-				x += i;
-				break;
-			}
-			
-			// Left
-			if (!place_meeting(x - i, y, solid_objects)) {
-				x -= i;
-				break;
-			}
-			
-			// Up
-			if (!place_meeting(x, y - i, solid_objects)) {
-				y -= i;
-				break;
-			}
-			
-			// Down
-			if (!place_meeting(x, y + i, solid_objects)) {
-				y += i;
-				break;
-			}
-			
-			// Top right
-			if (!place_meeting(x + i, y - i, solid_objects)) {
-				x += i;
-				y -= i;
-				break;
-			}
-			
-			// Top left
-			if (!place_meeting(x - i, y - i, solid_objects)) {
-				x -= i;
-				y -= i;
-				break;
-			}
-			
-			// Bottom right
-			if (!place_meeting(x + i, y + i, solid_objects)) {
-				x += i;
-				y += i;
-				break;
-			}
-			
-			// Bottom left
-			if (!place_meeting(x - i, y + i, solid_objects)) {
-				x -= i;
-				y += i;
-				break;
-			}
-		}
-	}
-}
-
-function holding_any_movement_key() {
-	return movement_check("up", "hold") || movement_check("down", "hold") || movement_check("left", "hold") || movement_check("right", "hold");
-}
-
-function movement_check(dir_string, type_string) {
-	var dir = string_upper(dir_string);
-	var type = string_upper(type_string);
-	var move_func;
-	
-	switch (type) {
-		case "HOLD": move_func = keyboard_check; break;
-		case "PRESSED": move_func = keyboard_check_pressed; break;
-		case "RELEASED": move_func = keyboard_check_released; break;
-		default: move_func = keyboard_check; break;
-	}
-	
-	switch (dir) {
-		case "UP": return move_func(up) or move_func(up_wasd);
-		case "DOWN": return move_func(down) or move_func(down_wasd);
-		case "LEFT": return move_func(left) or move_func(left_wasd);
-		case "RIGHT": return move_func(right) or move_func(right_wasd);
-	}
-	
-	return false;
-}
+// Util Functions
 
 function execute_dash() {
 	xsp = lengthdir_x(dash_speed, dash_direction);
@@ -589,34 +457,6 @@ function execute_dash() {
 	}
 }
 
-function update_angle_in_water(water_rotation_angles) {
-	var mean_angle = 0.0;
-	var use_next_circle = false;
-	if (ds_list_find_index(water_rotation_angles, 0) != -1 and ds_list_find_index(water_rotation_angles, 270)) {
-		use_next_circle = true;
-	}
-	
-	for (var i = 0; i < ds_list_size(water_rotation_angles); i++) {
-		var angle = water_rotation_angles[| i];
-		if (angle != 270 and use_next_circle) {
-			angle += 360;
-		}
-		mean_angle += angle;
-	}
-	if (not ds_list_empty(water_rotation_angles)) {
-		mean_angle /= ds_list_size(water_rotation_angles);
-	}
-	
-	if (image_xscale = -1 and mean_angle != 0) {
-		mean_angle -= 180;
-	}
-	if (mean_angle >= 360 and use_next_circle) {
-		mean_angle -= 360;
-	}
-	
-	image_angle = mean_angle;
-}
-
 function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
@@ -632,16 +472,4 @@ function die() {
 	room_persistent = false
 	room_restart();
 	dec_lives();
-}
-
-function dec_lives() {
-	global.lives--;
-	if (global.lives == 0) {
-		game_over();
-	}
-}
-
-function game_over() {
-	room_goto(0);
-	game_restart();
 }

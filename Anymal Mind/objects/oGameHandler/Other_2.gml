@@ -3,8 +3,10 @@
 global.room_save = room
 global.reset_all_rooms[1] = false
 
+// UI
 global.lives = 9;
 global.current_level = 1;
+global.animal_squares_selected = [false, false, false, false];
 
 global.animals = ds_map_create();
 ds_map_add(global.animals, "Human", {sprite: sPlayer, aerial: false, aquatic: false, climber: false, discovered: true})

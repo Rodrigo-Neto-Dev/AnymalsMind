@@ -7,6 +7,8 @@ enum P1State {
 	DASHING
 }
 
+enum P2State {}
+
 p1_states = [];
 p2_states = [];
 
@@ -77,7 +79,7 @@ function toStringP2States() {
 function toStringStates(states) {
 	var state_string = "[";
 	
-	if (!array_length(states) == 0) {
+	if (array_length(states) != 0) {
 		state_string += toStringP1State(states[0]) + toStringP2State(states[0]);
 	}
 	
