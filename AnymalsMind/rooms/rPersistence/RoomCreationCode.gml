@@ -1,1 +1,0 @@
-// Empty room for room persistence purposes. It should stay at the end of the room order
