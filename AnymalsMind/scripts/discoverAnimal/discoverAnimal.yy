@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"discoverAnimal",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"discoverAnimal",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
