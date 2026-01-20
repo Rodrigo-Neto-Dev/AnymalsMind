@@ -1,0 +1,1 @@
+image_speed = 0; // Do not animate explosion yet
