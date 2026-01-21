@@ -17,6 +17,7 @@ ds_map_add(global.animals, "Frog", {sprite: sP1Frog, aerial: false, strong: fals
 ds_map_add(global.animals, "Cat", {sprite: sP1Cat, aerial: false, strong: false, aquatic: false, climber: true, discovered: true})
 
 ds_map_add(global.animals, "Vulture", {sprite: sP1Vulture, aerial: true, strong: true, aquatic: false, climber: false, discovered: false})
+ds_map_add(global.animals, "Stingray", {sprite: sP1Stingray, aerial: true, strong: false, aquatic: true, climber: false, discovered: false})
 ds_map_add(global.animals, "Griffon", {sprite: sP1Griffon, aerial: true, strong: false, aquatic: false, climber: true, discovered: false})
 
 ds_map_add(global.animals, "Crab", {sprite: sP1Crab, aerial: false, strong: true, aquatic: true, climber: false, discovered: false})
@@ -32,6 +33,7 @@ global.animal_names = [
 	"Frog",
 	"Cat",
 	"Vulture",
+	"Stingray",
 	"Griffon",
 	"Crab",
 	"Panda",

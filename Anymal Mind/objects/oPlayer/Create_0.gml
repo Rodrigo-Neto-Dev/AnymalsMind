@@ -1,7 +1,3 @@
-icon_x = 1272;
-icon_y = 16;
-icon_size = 32;
-
 xsp = 0;
 ysp = 0;
 
@@ -113,6 +109,15 @@ steps_allowed_without_special = 240;
 	ds_map_add(vulture_animation_states, "swimming", sP1Vulture);
 #endregion
 
+#region STINGRAY
+    stingray_animation_states = ds_map_create();
+	ds_map_add(stingray_animation_states, "idle", sP1Stingray);
+	ds_map_add(stingray_animation_states, "special", sP1Stingray);
+	ds_map_add(stingray_animation_states, "running", sP1Stingray);
+	ds_map_add(stingray_animation_states, "jumping", sP1Stingray);
+	ds_map_add(stingray_animation_states, "swimming", sP1Stingray);
+#endregion
+
 #region GRIFFON
     griffon_animation_states = ds_map_create();
 	ds_map_add(griffon_animation_states, "idle", sP1Griffon);
@@ -156,6 +161,7 @@ ds_map_add(animal_to_animation_states, "Bear", bear_animation_states);
 ds_map_add(animal_to_animation_states, "Frog", frog_animation_states);
 ds_map_add(animal_to_animation_states, "Cat", cat_animation_states);
 ds_map_add(animal_to_animation_states, "Vulture", vulture_animation_states);
+ds_map_add(animal_to_animation_states, "Stingray", stingray_animation_states);
 ds_map_add(animal_to_animation_states, "Griffon", griffon_animation_states);
 ds_map_add(animal_to_animation_states, "Crab", crab_animation_states);
 ds_map_add(animal_to_animation_states, "Panda", panda_animation_states);
@@ -176,17 +182,6 @@ function check_menus() {
 
     if (keyboard_check_pressed(key_open_inventory())) {
         ui_show_animals = !ui_show_animals;
-    }
-}
-
-function check_mouse() {
-	var mx = device_mouse_x_to_gui(0);
-    var my = device_mouse_y_to_gui(0);
-
-    if (mouse_check_button_pressed(key_ui_interact())) {
-        if (point_in_rectangle(mx, my, icon_x, icon_y, icon_x + icon_size, icon_y + icon_size)) {
-            ui_show_animals = !ui_show_animals;
-        }
     }
 }
 

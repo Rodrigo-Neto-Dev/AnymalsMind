@@ -101,7 +101,6 @@
     {"name":"sPlayerJumping","order":2,"path":"sprites/sPlayerJumping/sPlayerJumping.yy",},
     {"name":"sPlayerRunning","order":3,"path":"sprites/sPlayerRunning/sPlayerRunning.yy",},
     {"name":"sPlayerSpecial","order":4,"path":"sprites/sPlayerSpecial/sPlayerSpecial.yy",},
-    {"name":"Sprite49","order":15,"path":"sprites/Sprite49/Sprite49.yy",},
     {"name":"sSolid","order":2,"path":"sprites/sSolid/sSolid.yy",},
     {"name":"sSpike","order":3,"path":"sprites/sSpike/sSpike.yy",},
     {"name":"sWater","order":4,"path":"sprites/sWater/sWater.yy",},

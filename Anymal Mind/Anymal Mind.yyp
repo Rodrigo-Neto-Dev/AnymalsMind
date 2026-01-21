@@ -133,7 +133,6 @@
     {"id":{"name":"sPlayerJumping","path":"sprites/sPlayerJumping/sPlayerJumping.yy",},},
     {"id":{"name":"sPlayerRunning","path":"sprites/sPlayerRunning/sPlayerRunning.yy",},},
     {"id":{"name":"sPlayerSpecial","path":"sprites/sPlayerSpecial/sPlayerSpecial.yy",},},
-    {"id":{"name":"Sprite49","path":"sprites/Sprite49/Sprite49.yy",},},
     {"id":{"name":"sSolid","path":"sprites/sSolid/sSolid.yy",},},
     {"id":{"name":"sSpike","path":"sprites/sSpike/sSpike.yy",},},
     {"id":{"name":"sWater","path":"sprites/sWater/sWater.yy",},},
