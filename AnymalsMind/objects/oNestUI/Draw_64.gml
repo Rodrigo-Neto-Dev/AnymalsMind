@@ -242,3 +242,41 @@ if (click && craft_hover && can_craft) {
     selected_item_a = -1;
     selected_item_b = -1;
 }
+
+// TAKE button (withdraw selected A, if only one selected)
+var tbw = 140;
+var tbh = 26;
+var tbx = bx - 10 - tbw;
+var tby = by;
+
+var can_take = (selected_item_a != -1) && (selected_item_b == -1); // only one selected
+var take_hover = (mx >= tbx && mx <= tbx + tbw && my >= tby && my <= tby + tbh);
+
+draw_set_color(!can_take ? make_color_rgb(70,70,80) : (take_hover ? make_color_rgb(90,90,160) : make_color_rgb(70,70,130)));
+draw_rectangle(tbx, tby, tbx + tbw, tby + tbh, false);
+draw_set_color(make_color_rgb(40,40,50));
+draw_rectangle(tbx, tby, tbx + tbw, tby + tbh, true);
+draw_set_color(c_white);
+draw_text(tbx + 10, tby + 5, "TAKE");
+
+if (click && take_hover && can_take) {
+    // find P2 and ensure free hands
+    var p2 = instance_find(oP2, 0);
+    if (p2 != noone && p2.carried_item == noone && p2.state != "downed") {
+        var item_id = active_nest.withdraw_index(selected_item_a);
+
+        if (item_id != ITEM.NONE) {
+            // spawn an oItem and attach to P2 carry system
+            var itm = instance_create_layer(p2.x, p2.y, "Instances", oItem);
+            itm.item_id = item_id;
+            itm.visible = false;
+            itm.active = false;
+
+            p2.carried_item = itm;
+            p2.state = "carrying";
+        }
+    }
+
+    selected_item_a = -1;
+    selected_item_b = -1;
+}

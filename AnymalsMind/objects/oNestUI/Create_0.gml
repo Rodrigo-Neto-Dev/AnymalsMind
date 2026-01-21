@@ -1,6 +1,7 @@
 ui_open = false;
 ui_mode = "none"; // none | nest
 active_nest = noone;
+request_take = false;
 
 // Inventory selection
 selected_item_a = -1;

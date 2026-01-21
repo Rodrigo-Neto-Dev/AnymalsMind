@@ -1,17 +1,10 @@
-var p1 = instance_nearest(x, y, oPlayer);
-if (distance_to_object(p1) < 12) {
-	p1.take_damage(contact_damage);
-}
-	
-function take_damage(amount) {
-	hp -= amount;
-	if (hp <= 0) {
-		instance_create_layer(x, y, "Enemies", oItem); // drop
-		instance_destroy();
-	}
-}
+if (invuln > 0) invuln--;
+if (contact_cooldown > 0) contact_cooldown--;
 
-
-function peck_hit(attacker) {
-	take_damage(1);
+if (contact_cooldown <= 0) {
+    var p2 = instance_place(x, y, oP2);
+    if (p2 != noone && p2.state != "downed") {
+        p2.take_damage(contact_damage);
+        contact_cooldown = contact_cooldown_max;
+    }
 }

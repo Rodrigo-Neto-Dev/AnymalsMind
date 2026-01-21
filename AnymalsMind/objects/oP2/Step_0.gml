@@ -14,8 +14,9 @@ switch (state) {
 
 if (mouse_check_button_pressed(mb_right)) {
 	if (state == "normal" && peck_cooldown <= 0) {
-		with (instance_place(x, y, oEnemy)) {
-			other.peck_hit(id);
+		var e = instance_nearest(x, y, oEnemy);
+		if (e != noone && point_distance(x,y,e.x,e.y) <= peck_range) {
+			with (e) other.peck_hit(id);
 		}
 		peck_cooldown = peck_cooldown_max;
 	}
@@ -61,14 +62,29 @@ function revive() {
 	state = "normal";
 }
 
-if (place_meeting(x, y, oNest)) {
-	if (mouse_check_button_pressed(mb_left)) {
-		var ui = instance_create_layer(0, 0, "Effects", oNestUI);
-		ui.open(other);
-
-	}
+if (place_meeting(x, y, oNest) && mouse_check_button_pressed(mb_left)) {
+    var n = instance_place(x, y, oNest);
+    if (n != noone) {
+        if (instance_exists(oNestUI)) {
+            with (oNestUI) open(n.id);
+        } else {
+            var ui = instance_create_layer(0, 0, "UI", oNestUI);
+            ui.open(n.id);
+        }
+    }
 }
 
+if (carried_item != noone && place_meeting(x, y, oNest) && mouse_check_button_pressed(mb_right)) {
+    var n = instance_place(x, y, oNest);
+    if (n != noone) {
+        var id_to_deposit = carried_item.item_id;
+        if (n.deposit_item(id_to_deposit)) {
+            with (carried_item) instance_destroy(); // consume the world item
+            carried_item = noone;
+            state = "normal";
+        }
+    }
+}
 
 cam_x = camera_get_view_x(view_camera[0]);
 cam_y = camera_get_view_y(view_camera[0]);

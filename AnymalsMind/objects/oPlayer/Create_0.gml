@@ -18,6 +18,7 @@ ui_show_animals = false;
 current_animal = global.current_animal;
 sprite_index = global.current_animal_sprite;
 current_animation_states = global.current_animation_states;
+held_item = ITEM.NONE;
 
 // For animal special animations
 steps_without_special = 0;

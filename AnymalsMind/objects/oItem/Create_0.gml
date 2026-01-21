@@ -1,2 +1,2 @@
-item_id = ""; // e.g. "Feather", "Berry", "Claw"
-stackable = true;
+item_id = ITEM.TWIG; // set this when you spawn it
+active = true;
