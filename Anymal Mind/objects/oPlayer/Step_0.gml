@@ -14,34 +14,23 @@ check_mouse();
 transform();
 execute_behaviors();
 
-#region BIRD
-    if (current_animal == "Bird") {
-		//
+#region SPECIFIC ANIMAL EXTRA BEHAVIOR
+    // Activate/Deactivate swimming and climbing
+    if (current_animal == "Blobfish" && place_meeting(x, y, oWater)) {
+		if (keyboard_check_pressed(key_dash())) {
+			ignore_swimming_climbing_states = containsP1State(P1State.SWIMMING);
+		    if (ignore_swimming_climbing_states) {
+				delP1State(P1State.SWIMMING);
+				delP1State(P1State.CLIMBING)
+				_gravity = _gravity_normal;
+			}
+		    else {
+				addP1State(P1State.SWIMMING);
+				_gravity = _gravity_water;
+			}
+		}
 	}
-#endregion
-
-#region BEAR
-    if (current_animal == "Bear") {
-		//
-	}
-#endregion
-
-#region FROG
-    if (current_animal == "Frog") {
-		//
-	}
-#endregion
-
-#region CAT
-    if (current_animal == "Cat") {
-		//
-	}
-#endregion
-
-#region GRIFFON -> BIRD + CAT
-    if (current_animal == "Griffon") {
-		//
-    }
+	else ignore_swimming_climbing_states = false;
 #endregion
 
 prepare_move();

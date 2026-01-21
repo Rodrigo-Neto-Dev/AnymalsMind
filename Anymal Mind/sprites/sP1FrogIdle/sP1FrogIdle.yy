@@ -47,7 +47,7 @@
   "origin":9,
   "parent":{
     "name":"Frog",
-    "path":"folders/Sprites/Frog.yy",
+    "path":"folders/Sprites/Animals/Frog.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

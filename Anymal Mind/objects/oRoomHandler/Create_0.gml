@@ -42,7 +42,6 @@ function set_background(back, back_color, music) {
 
 function set_water_alpha(alpha) {
 	with (oWater) {
-		show_debug_message(alpha);
 	    image_alpha = alpha;
 	}
 }

@@ -5,10 +5,10 @@ icon_size = 32;
 xsp = 0;
 ysp = 0;
 
-_gravity_normal = 1
-_gravity = _gravity_normal
+_gravity_normal = 1;
+_gravity = _gravity_normal;
 
-left_released = false
+left_released = false;
 right_released = false;
 
 // UI state flag
@@ -30,6 +30,16 @@ steps_allowed_without_special = 240;
     aerial_jump_timer = 0;
 #endregion
 
+#region STRONG
+    dash_cooldown = 60;
+	dash_steps_until_next = 0;
+	dash_distance = 96;
+	dash_time = 3;
+	dash_speed = 0;
+	dash_energy = 0;
+	dash_direction = 0;
+#endregion
+
 #region AQUATIC
 	_gravity_water = 0;
 	water_enter_immediate_slow_down_factor = 0.4; // To reduce the falling speed of the player right when it enters the water
@@ -37,26 +47,24 @@ steps_allowed_without_special = 240;
 	in_water_steps_without_water_animal = 0; // Current steps inside the water without a water animal
 	in_water_steps_allowed_without_water_animal = 60; // 2s - Max limit of steps inside the water without a water animal before the player dies
 	water_movement_slow_down_factor = 0.9; // To reduce the speed of the player bellow water
+	ignore_swimming_climbing_states = false; // The blobfish is able to ignore the swimming and climbing states to walk in the water
 #endregion
 
 #region CLIMBER
-    left_wall = false
-    rigth_wall = false
-	wall_jump_speed_factor = 10 // To make a quick jump out of climbing mode
-#endregion
-
-#region STRONG
-    push_power = 1; // tweak force
+    left_wall = false;
+    rigth_wall = false;
+	wall_jump_speed_factor = 10; // To make a quick jump out of climbing mode
+	allowed_distance_from_wall = 5;
 #endregion
 
 // Specific animals
 
 #region HUMAN
     human_animation_states = ds_map_create();
-	ds_map_add(human_animation_states, "idle", sPlayer);
-	ds_map_add(human_animation_states, "special", sPlayer);
-	ds_map_add(human_animation_states, "running", sPlayer);
-	ds_map_add(human_animation_states, "jumping", sPlayer);
+	ds_map_add(human_animation_states, "idle", sPlayerIdle);
+	ds_map_add(human_animation_states, "special", sPlayerSpecial);
+	ds_map_add(human_animation_states, "running", sPlayerRunning);
+	ds_map_add(human_animation_states, "jumping", sPlayerJumping);
 	ds_map_add(human_animation_states, "swimming", sPlayer);
 #endregion
 
@@ -85,12 +93,6 @@ steps_allowed_without_special = 240;
 	ds_map_add(frog_animation_states, "running", sP1FrogRunning);
 	ds_map_add(frog_animation_states, "jumping", sP1FrogJumping);
 	ds_map_add(frog_animation_states, "swimming", sP1FrogSwimming);
-	
-	dash_cooldown = 60;
-	dash_steps_until_next = 0;
-	dash_distance = 96;
-	dash_time = 3;
-	dash_direction = 0;
 #endregion
 
 #region CAT
@@ -102,6 +104,15 @@ steps_allowed_without_special = 240;
 	ds_map_add(cat_animation_states, "swimming", sP1Cat);
 #endregion
 
+#region VULTURE
+    vulture_animation_states = ds_map_create();
+	ds_map_add(vulture_animation_states, "idle", sP1VultureIdle);
+	ds_map_add(vulture_animation_states, "special", sP1VultureIdle);
+	ds_map_add(vulture_animation_states, "running", sP1VultureRunning);
+	ds_map_add(vulture_animation_states, "jumping", sP1VultureJumping);
+	ds_map_add(vulture_animation_states, "swimming", sP1Vulture);
+#endregion
+
 #region GRIFFON
     griffon_animation_states = ds_map_create();
 	ds_map_add(griffon_animation_states, "idle", sP1Griffon);
@@ -111,13 +122,44 @@ steps_allowed_without_special = 240;
 	ds_map_add(griffon_animation_states, "swimming", sP1Griffon);
 #endregion
 
+#region CRAB
+    crab_animation_states = ds_map_create();
+	ds_map_add(crab_animation_states, "idle", sP1Crab);
+	ds_map_add(crab_animation_states, "special", sP1Crab);
+	ds_map_add(crab_animation_states, "running", sP1Crab);
+	ds_map_add(crab_animation_states, "jumping", sP1Crab);
+	ds_map_add(crab_animation_states, "swimming", sP1Crab);
+#endregion
+
+#region PANDA
+    panda_animation_states = ds_map_create();
+	ds_map_add(panda_animation_states, "idle", sP1PandaIdle);
+	ds_map_add(panda_animation_states, "special", sP1PandaSpecial);
+	ds_map_add(panda_animation_states, "running", sP1PandaRunning);
+	ds_map_add(panda_animation_states, "jumping", sP1PandaJumping);
+	ds_map_add(panda_animation_states, "swimming", sP1PandaIdle);
+#endregion
+
+#region BLOB
+    blob_animation_states = ds_map_create();
+	ds_map_add(blob_animation_states, "idle", sP1BlobIdle);
+	ds_map_add(blob_animation_states, "special", sP1BlobIdle);
+	ds_map_add(blob_animation_states, "running", sP1BlobRunning);
+	ds_map_add(blob_animation_states, "jumping", sP1BlobJumping);
+	ds_map_add(blob_animation_states, "swimming", sP1BlobSwimming);
+#endregion
+
 animal_to_animation_states = ds_map_create();
 ds_map_add(animal_to_animation_states, "Human", human_animation_states);
 ds_map_add(animal_to_animation_states, "Bird", bird_animation_states);
 ds_map_add(animal_to_animation_states, "Bear", bear_animation_states);
 ds_map_add(animal_to_animation_states, "Frog", frog_animation_states);
 ds_map_add(animal_to_animation_states, "Cat", cat_animation_states);
+ds_map_add(animal_to_animation_states, "Vulture", vulture_animation_states);
 ds_map_add(animal_to_animation_states, "Griffon", griffon_animation_states);
+ds_map_add(animal_to_animation_states, "Crab", crab_animation_states);
+ds_map_add(animal_to_animation_states, "Panda", panda_animation_states);
+ds_map_add(animal_to_animation_states, "Blobfish", blob_animation_states);
 
 // ---------------------------------------------------------------------- //
 
@@ -165,12 +207,13 @@ function transform() {
 function execute_behaviors() {
 	general_behavior();
 	aerial_behavior();
+	strong_behavior();
 	aquatic_behavior();
 	climber_behavior();
 }
 
 function general_behavior() {
-	if place_meeting(x, y+1, oSolid) {
+	if place_meeting(x, y+1, get_obstacles()) {
 	    ysp = 0;
 	    addP1State(P1State.GROUNDED);
 		delP1State(P1State.FLYING);
@@ -195,17 +238,41 @@ function aerial_behavior() {
 	    aerial_jump_timer -= 1;
     }
 	
-	if place_meeting(x, y+1, oSolid) {
+	if place_meeting(x, y+1, get_obstacles()) {
 		delP1State(P1State.FLYING);
 	    aerial_jumps = 3;
     }
 	
 	if (movement_check("up", "pressed") && !containsP1State(P1State.GROUNDED)) {
 		addP1State(P1State.FLYING);
+		if (aerial_jumps > 0) sprite_index = current_animation_states[? "jumping"];
+	}
+}
+
+function strong_behavior() {
+	// Needs more time until next dash
+	if (dash_steps_until_next > 0) {
+		dash_steps_until_next--;
+		return;
+	}
+	
+	if (not global.animals[? current_animal].strong) return;
+	
+	if (keyboard_check_pressed(key_dash()) && holding_any_movement_key()) {
+		dash_steps_until_next = dash_cooldown;
+		addP1State(P1State.DASHING);
+		dash_direction = point_direction(0, 0, keyboard_check(key_right()) - keyboard_check(key_left()), keyboard_check(key_down()) - keyboard_check(key_up()));
+		if (dash_direction == 0) {
+			dash_direction = point_direction(0, 0, keyboard_check(key_right_wasd()) - keyboard_check(key_left_wasd()), keyboard_check(key_down_wasd()) - keyboard_check(key_up_wasd()));
+		}
+		dash_speed = dash_distance / dash_time;
+		dash_energy = dash_distance;
 	}
 }
 
 function aquatic_behavior() {
+	if (ignore_swimming_climbing_states) return;
+	
     if place_meeting(x, y, oWater) {
 		
 	    _gravity = _gravity_water;
@@ -232,7 +299,6 @@ function aquatic_behavior() {
 			}
 		} else {
 			in_water_steps_without_water_animal = 0;
-			if (dash_steps_until_next > 0) dash_steps_until_next--; // Needs more time until next dash
 		}
 		
 		addP1State(P1State.SWIMMING);
@@ -245,12 +311,14 @@ function aquatic_behavior() {
 }
 
 function climber_behavior() {
+	if (ignore_swimming_climbing_states) return;
+	
 	delP1State(P1State.CLIMBING);
 	
 	if (not global.animals[? current_animal].climber) return;
 
-    left_wall  = place_meeting(x - 1, y, oSolid);
-    right_wall = place_meeting(x + 1, y, oSolid);
+    left_wall  = place_meeting(x - allowed_distance_from_wall, y, get_obstacles());
+    right_wall = place_meeting(x + allowed_distance_from_wall, y, get_obstacles());
 	
 	if (left_wall || right_wall) {
 		addP1State(P1State.CLIMBING);
@@ -277,6 +345,7 @@ function prepare_move() {
 	    }
 	    else if (containsP1State(P1State.CLIMBING) && right_wall) {
 		    xsp = -1 * wall_jump_speed_factor;
+			_gravity = _gravity_normal;
 	    }
 	    else {
 	        xsp = -1;
@@ -309,6 +378,7 @@ function prepare_move() {
 	    }
 	    else if (containsP1State(P1State.CLIMBING) && left_wall) {
 		    xsp = 1 * wall_jump_speed_factor;
+			_gravity = _gravity_normal;
 	    }
 	    else {
 	        xsp = 1;
@@ -372,7 +442,7 @@ function prepare_move() {
 	    }
 	}
 	
-	// Idle
+	// Idle or Special animation (if the current animal has it)
 	if (containsP1State(P1State.IDLE)) {
 		sprite_index = current_animation_states[? "idle"];
 		steps_without_special++;
@@ -385,16 +455,8 @@ function prepare_move() {
 		steps_without_special = 0;
 	}
 	
-	// Underwater dash
-	if (keyboard_check_pressed(key_dash()) && holding_any_movement_key()) {
-		if (containsP1State(P1State.SWIMMING) && dash_steps_until_next == 0) {
-			dash_steps_until_next = dash_cooldown;
-			addP1State(P1State.DASHING);
-			dash_direction = point_direction(0, 0, keyboard_check(key_right()) - keyboard_check(key_left()), keyboard_check(key_down()) - keyboard_check(key_up()));
-			dash_speed = dash_distance / dash_time;
-			dash_energy = dash_distance;
-			execute_dash();
-		}
+	if (containsP1State(P1State.DASHING)) {
+		execute_dash();
 	}
 	
 	// Underwater angle
@@ -404,17 +466,28 @@ function prepare_move() {
 
 function execute_move() {
 	if (containsP1State(P1State.DASHING)) {
-	    var boxes_dashed = ds_list_create();
-	    collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, true, true, boxes_dashed, true);
+		var boxes_dashed = ds_list_create();
+		
+	    //collision_line_list(x, y, x + xsp, y + ysp, oExplodingBox, true, true, boxes_dashed, true);
+		collision_rectangle_list(bbox_left + xsp, bbox_top + ysp, bbox_right + xsp, bbox_bottom + ysp, oExplodingBox, true, true, boxes_dashed, true);
 	
 	    for (var i = 0; i < ds_list_size(boxes_dashed); i++) {
 		    with (ds_list_find_value(boxes_dashed, i)) {
 		        image_speed = 1; // Animate box explosion
 		    }
 	    }
+		
+		// Remove the dashable obstacles from the array of all obstacles
+		var obstacles_array = get_obstacles();
+		for (var i = 0; i < array_length(obstacles_array); i++) {
+			if (obstacles_array[i] == oExplodingBox) {
+				array_delete(obstacles_array, i, 1);
+				break;
+			}
+		}
 	
 	    ds_list_destroy(boxes_dashed);
-		move_and_collide(xsp, ysp, oSolid);
+		move_and_collide(xsp, ysp, obstacles_array);
 	}
 	else move_and_collide(xsp, ysp, get_obstacles());
 	

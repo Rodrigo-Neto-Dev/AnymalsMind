@@ -33,18 +33,18 @@ function get_player_current_animal() {
 	var cat = contains_animal_selected("Cat");
 	
 	if (bird) {
-		if (bear) return "Human";
+		if (bear) return "Vulture";
 		if (frog) return "Human";
 		if (cat) return "Griffon";
 		return "Bird";
 	}
 	if (bear) {
-		if (frog) return "Human";
-		if (cat) return "Human";
+		if (frog) return "Crab";
+		if (cat) return "Panda";
 		return "Bear";
 	}
 	if (frog) {
-		if (cat) return "Human";
+		if (cat) return "Blobfish";
 		return "Frog";
 	}
 	if (cat) {
