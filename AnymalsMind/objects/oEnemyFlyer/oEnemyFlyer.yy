@@ -34,8 +34,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"Sprite29",
-    "path":"sprites/Sprite29/Sprite29.yy",
+    "name":"bat",
+    "path":"sprites/bat/bat.yy",
   },
   "spriteMaskId":null,
   "visible":true,
