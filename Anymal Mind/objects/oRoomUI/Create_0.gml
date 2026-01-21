@@ -166,3 +166,27 @@ function can_select_animal() {
 	
 	return num_selected_animals < 2;
 }
+
+function get_item_square_selected(player_x, player_y) {
+	var square_selected = -1;
+	
+	var items_start = (last_unmerged_animal_index - first_unmerged_animal_index + 1) + 1;
+	
+	var gui_coords = room_to_gui_coords(player_x, player_y);
+	var gui_x = gui_coords[0];
+	var gui_y = gui_coords[1];
+	
+	var inc = square_side_length;
+	var curr_x = inc * items_start;
+	var curr_y = bottom_rect_yorigin + rectangle_height / 2;
+	
+	for (var i = 0; curr_x < width; i++) {
+		if (point_in_rectangle(gui_x, gui_y, curr_x, curr_y - rectangle_height / 2, curr_x + inc, curr_y + rectangle_height / 2)) {
+			square_selected = i;
+			break;
+		}
+		curr_x += inc;
+	}
+	
+	return square_selected;
+}
