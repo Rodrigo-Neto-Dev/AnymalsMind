@@ -2,7 +2,6 @@
 
 global.room_save = room
 global.reset_all_rooms[1] = false
-display_set_gui_size(1920, 1080);
 
 // UI
 global.lives = 9;
