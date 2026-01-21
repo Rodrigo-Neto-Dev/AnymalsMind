@@ -502,10 +502,21 @@ function execute_move() {
     if place_meeting(x, y, oSpike) {
 	    die();
     }
-	
-	var player_coords = unstuck(x, y);
-	x = player_coords[0];
-	y = player_coords[1];
+	if place_meeting(x, y, oItem) {
+		var inst_player_item = instance_place(x, y, oItem);
+
+		if inst_player_item.is_moving == 0 {
+			var player_coords = unstuck(x, y);
+			x = player_coords[0];
+			y = player_coords[1];
+		}
+
+	}
+	else {
+		var player_coords = unstuck(x, y);
+		x = player_coords[0];
+		y = player_coords[1];
+	}
 }
 
 // Util Functions

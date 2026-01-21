@@ -14,6 +14,9 @@ peck_damage = 1;
 
 // --- Carrying ---
 carried_item = noone;
+carry_item = noone;
+drag_offset_x = 0;
+drag_offset_y = 0;
 
 // --- References ---
 nest_ref = noone; // assigned at room start or by collision
@@ -51,3 +54,4 @@ function select_animal(square_selected, square_state) {
 		default: break;
 	}
 }	
+
