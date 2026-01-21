@@ -54,7 +54,7 @@ steps_allowed_without_special = 240;
     left_wall = false;
     rigth_wall = false;
 	wall_jump_speed_factor = 10; // To make a quick jump out of climbing mode
-	allowed_distance_from_wall = 5;
+	allowed_distance_from_wall = 3;
 #endregion
 
 // Specific animals
