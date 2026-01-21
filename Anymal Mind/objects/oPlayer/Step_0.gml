@@ -9,7 +9,6 @@ if (!containsP1State(P1State.SWIMMING)) {
 
 set_camera();
 check_menus();
-check_mouse();
 
 transform();
 execute_behaviors();

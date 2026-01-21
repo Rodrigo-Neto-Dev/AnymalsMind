@@ -124,6 +124,7 @@
     {"id":{"name":"sP1PandaJumping","path":"sprites/sP1PandaJumping/sP1PandaJumping.yy",},},
     {"id":{"name":"sP1PandaRunning","path":"sprites/sP1PandaRunning/sP1PandaRunning.yy",},},
     {"id":{"name":"sP1PandaSpecial","path":"sprites/sP1PandaSpecial/sP1PandaSpecial.yy",},},
+    {"id":{"name":"sP1Stingray","path":"sprites/sP1Stingray/sP1Stingray.yy",},},
     {"id":{"name":"sP1Vulture","path":"sprites/sP1Vulture/sP1Vulture.yy",},},
     {"id":{"name":"sP1VultureIdle","path":"sprites/sP1VultureIdle/sP1VultureIdle.yy",},},
     {"id":{"name":"sP1VultureJumping","path":"sprites/sP1VultureJumping/sP1VultureJumping.yy",},},

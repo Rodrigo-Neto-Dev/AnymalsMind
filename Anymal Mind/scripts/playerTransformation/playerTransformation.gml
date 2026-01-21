@@ -34,7 +34,7 @@ function get_player_current_animal() {
 	
 	if (bird) {
 		if (bear) return "Vulture";
-		if (frog) return "Human";
+		if (frog) return "Stingray";
 		if (cat) return "Griffon";
 		return "Bird";
 	}

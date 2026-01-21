@@ -94,6 +94,7 @@
     {"name":"sP1PandaJumping","order":3,"path":"sprites/sP1PandaJumping/sP1PandaJumping.yy",},
     {"name":"sP1PandaRunning","order":2,"path":"sprites/sP1PandaRunning/sP1PandaRunning.yy",},
     {"name":"sP1PandaSpecial","order":4,"path":"sprites/sP1PandaSpecial/sP1PandaSpecial.yy",},
+    {"name":"sP1Stingray","order":14,"path":"sprites/sP1Stingray/sP1Stingray.yy",},
     {"name":"sP1Vulture","order":3,"path":"sprites/sP1Vulture/sP1Vulture.yy",},
     {"name":"sP1VultureIdle","order":1,"path":"sprites/sP1VultureIdle/sP1VultureIdle.yy",},
     {"name":"sP1VultureJumping","order":2,"path":"sprites/sP1VultureJumping/sP1VultureJumping.yy",},
