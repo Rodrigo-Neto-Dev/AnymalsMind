@@ -1,9 +1,28 @@
+// --- Health & States ---
+hp = 3;
+hp_max = 3;
+spd = 4;
+
+state = "normal"; // normal, stunned, downed, carrying
+stun_timer = 0;
+
+// --- Peck ---
+peck_cooldown = 0;
+peck_cooldown_max = 20;
+peck_range = 16;
+peck_damage = 1;
+
+// --- Carrying ---
+carried_item = noone;
+
+// --- References ---
+nest_ref = noone; // assigned at room start or by collision
+
+
 cam_x = 0;
 cam_y = 0;
 cam_w = 0;
 cam_h = 0;
-
-spd = 4;
 
 nx = 0;
 ny = 0;
@@ -31,4 +50,4 @@ function select_animal(square_selected, square_state) {
 		case 3: add_or_del("Cat"); break;
 		default: break;
 	}
-}
+}	
