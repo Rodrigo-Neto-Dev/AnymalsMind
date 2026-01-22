@@ -460,6 +460,7 @@ function prepare_move() {
 }
 
 function execute_move() {
+	show_debug_message(toStringP1States());
 	if (containsP1State(P1State.DASHING)) {
 		var boxes_dashed = ds_list_create();
 		
@@ -483,6 +484,7 @@ function execute_move() {
 	
 	    ds_list_destroy(boxes_dashed);
 		move_and_collide(xsp, ysp, obstacles_array);
+		array_push(obstacles_array, oExplodingBox);
 	}
 	else move_and_collide(xsp, ysp, get_obstacles());
 	
