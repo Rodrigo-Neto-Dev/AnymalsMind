@@ -41,21 +41,13 @@ function p1_controls_array() {
 	controls_push(controls, "Pause Menu", "P");
 	controls_push(controls, "Animal Inventory", "B");
 	
-	controls_push(controls, "Move/Swim left", "A or left arrow");
-	controls_push(controls, "Move/Swim right", "D or right arrow");
-	controls_push(controls, "Jump/Swim/Climb up", "W or up arrow");
-	controls_push(controls, "Swim/Climb down", "S or down arrow");
+	controls_push(controls, "Move/Swim/Dash left", "A or left arrow");
+	controls_push(controls, "Move/Swim/Dash right", "D or right arrow");
+	controls_push(controls, "Jump/Swim/Dash/Climb up", "W or up arrow");
+	controls_push(controls, "Swim/Dash/Climb down", "S or down arrow");
 	
-	controls_push(controls, "Human transformation", "0");
-	controls_push(controls, "Bird transformation", "1");
-	controls_push(controls, "Bear transformation", "2");
-	controls_push(controls, "Frog transformation", "3");
-	controls_push(controls, "Cat transformation", "4");
-	controls_push(controls, "Griffon transformation", "5");
-	
-	controls_push(controls, "Bird jump", "W or up arrow");
-	
-	controls_push(controls, "Frog underwater dash", "E");
+	controls_push(controls, "Special Ability", "X");
+	controls_push(controls, "Shoot", "F");
 	
 	return controls;
 }
@@ -63,7 +55,8 @@ function p1_controls_array() {
 function p2_controls_array() {
 	var controls = [];
 	
-	controls_push(controls, "Move", "move mouse");
+	controls_push(controls, "Move", "Move Mouse");
+	controls_push(controls, "Select Animal/Pick Item", "Mouse left click");
 	
 	return controls;
 }

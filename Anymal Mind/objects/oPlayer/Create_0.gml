@@ -253,7 +253,7 @@ function strong_behavior() {
 	
 	if (not global.animals[? current_animal].strong) return;
 	
-	if (keyboard_check_pressed(key_dash()) && holding_any_movement_key()) {
+	if (keyboard_check_pressed(key_special()) && holding_any_movement_key()) {
 		dash_steps_until_next = dash_cooldown;
 		addP1State(P1State.DASHING);
 		dash_direction = point_direction(0, 0, keyboard_check(key_right()) - keyboard_check(key_left()), keyboard_check(key_down()) - keyboard_check(key_up()));

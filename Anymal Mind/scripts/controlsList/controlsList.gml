@@ -12,7 +12,7 @@ down_wasd = ord("S");
 left_wasd = ord("A");
 right_wasd = ord("D");
 
-dash = ord("E");
+special = ord("X");
 
 // Player 2
 
@@ -58,8 +58,8 @@ function key_right_wasd() {
 	return global.right_wasd;
 }
 
-function key_dash() {
-	return global.dash;
+function key_special() {
+	return global.special;
 }
 
 function key_ui_interact() {

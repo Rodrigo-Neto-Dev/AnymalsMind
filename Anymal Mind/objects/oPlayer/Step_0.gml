@@ -16,7 +16,7 @@ execute_behaviors();
 #region SPECIFIC ANIMAL EXTRA BEHAVIOR
     // Activate/Deactivate swimming and climbing
     if (current_animal == "Blobfish" && place_meeting(x, y, oWater)) {
-		if (keyboard_check_pressed(key_dash())) {
+		if (keyboard_check_pressed(key_special())) {
 			ignore_swimming_climbing_states = containsP1State(P1State.SWIMMING);
 		    if (ignore_swimming_climbing_states) {
 				delP1State(P1State.SWIMMING);
