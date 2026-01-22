@@ -13,7 +13,7 @@ function fire_at_p2() {
 
     var dir = point_direction(x, y, p2.x, p2.y);
 
-    var b = instance_create_layer(x, y, "Enemies", oBullet);
+    var b = instance_create_layer(x, y, "PlayersEnemies", oBullet);
     b.direction = dir;
     b.speed = bullet_speed;
 

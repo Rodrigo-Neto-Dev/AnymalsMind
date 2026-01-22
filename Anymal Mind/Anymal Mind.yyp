@@ -98,6 +98,7 @@
     {"id":{"name":"sndMain","path":"sounds/sndMain/sndMain.yy",},},
     {"id":{"name":"sndSelect","path":"sounds/sndSelect/sndSelect.yy",},},
     {"id":{"name":"sndWater","path":"sounds/sndWater/sndWater.yy",},},
+    {"id":{"name":"flyer","path":"sprites/flyer/flyer.yy",},},
     {"id":{"name":"golem","path":"sprites/golem/golem.yy",},},
     {"id":{"name":"item","path":"sprites/item/item.yy",},},
     {"id":{"name":"sArrow","path":"sprites/sArrow/sArrow.yy",},},
@@ -157,9 +158,9 @@
     {"roomId":{"name":"rMainMenu","path":"rooms/rMainMenu/rMainMenu.yy",},},
     {"roomId":{"name":"rPauseMenu","path":"rooms/rPauseMenu/rPauseMenu.yy",},},
     {"roomId":{"name":"r1","path":"rooms/r1/r1.yy",},},
-    {"roomId":{"name":"rPersistence","path":"rooms/rPersistence/rPersistence.yy",},},
     {"roomId":{"name":"r1Test","path":"rooms/r1Test/r1Test.yy",},},
     {"roomId":{"name":"r2Test","path":"rooms/r2Test/r2Test.yy",},},
+    {"roomId":{"name":"rPersistence","path":"rooms/rPersistence/rPersistence.yy",},},
   ],
   "templateType":null,
   "TextureGroups":[
