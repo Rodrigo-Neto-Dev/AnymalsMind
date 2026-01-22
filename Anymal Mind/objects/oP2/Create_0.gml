@@ -6,11 +6,6 @@ spd = 4;
 state = "normal"; // normal, stunned, downed, carrying
 stun_timer = 0;
 
-// --- Peck ---
-peck_cooldown = 0;
-peck_cooldown_max = 20;
-peck_range = 16;
-peck_damage = 1;
 
 // --- Carrying ---
 carried_item = noone;
@@ -55,3 +50,32 @@ function select_animal(square_selected, square_state) {
 	}
 }	
 
+function drop_item() {
+    if (carried_item != noone) {
+        carried_item.x = x;
+        carried_item.y = y;
+        carried_item.visible = true;
+        carried_item.active = true;
+        carried_item = noone;
+        state = "normal";
+    }
+}
+
+function take_damage(amount) {
+    if (state == "downed") return;
+
+    hp -= amount;
+    drop_item();
+
+    if (hp <= 0) {
+        state = "downed";
+    } else {
+        state = "stunned";
+        stun_timer = 10;
+    }
+}
+
+function revive() {
+    hp = hp_max;
+    state = "normal";
+}
