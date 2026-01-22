@@ -1,5 +1,5 @@
 event_inherited();
-
+is_moving = 1;
 
 if (fire_cooldown > 0) fire_cooldown--;
 
@@ -13,7 +13,7 @@ function fire_at_p2() {
 
     var dir = point_direction(x, y, p2.x, p2.y);
 
-    var b = instance_create_layer(x, y, "PlayersEnemies", oBullet);
+    var b = instance_create_layer(x, y, "Enemies", oBullet);
     b.direction = dir;
     b.speed = bullet_speed;
 
