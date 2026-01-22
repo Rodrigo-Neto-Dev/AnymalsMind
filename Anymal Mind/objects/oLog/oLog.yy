@@ -28,8 +28,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sLog1",
-    "path":"sprites/sLog1/sLog1.yy",
+    "name":"sLog",
+    "path":"sprites/sLog/sLog.yy",
   },
   "spriteMaskId":null,
   "visible":true,

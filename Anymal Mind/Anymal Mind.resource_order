@@ -68,7 +68,7 @@
     {"name":"sBackForest","order":3,"path":"sprites/sBackForest/sBackForest.yy",},
     {"name":"sBackWater","order":2,"path":"sprites/sBackWater/sBackWater.yy",},
     {"name":"sFlag","order":6,"path":"sprites/sFlag/sFlag.yy",},
-    {"name":"sLog1","order":1,"path":"sprites/sLog1/sLog1.yy",},
+    {"name":"sLog","order":1,"path":"sprites/sLog/sLog.yy",},
     {"name":"sNest","order":2,"path":"sprites/sNest/sNest.yy",},
     {"name":"sP1Bear","order":4,"path":"sprites/sP1Bear/sP1Bear.yy",},
     {"name":"sP1Bird","order":5,"path":"sprites/sP1Bird/sP1Bird.yy",},
