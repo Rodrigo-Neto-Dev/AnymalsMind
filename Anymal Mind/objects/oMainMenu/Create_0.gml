@@ -2,7 +2,7 @@
 
 // create the list for the menu
 menu = ds_list_create();	// list of menu items
-ds_list_add(menu, "New Game", "Load Game", "Controls", "Credits", "Exit Game");	// the menu items, add or remove items to customize
+ds_list_add(menu, "New Game", "Load Game", "Controls", "Exit Game");	// the menu items, add or remove items to customize
 
 // menu selected
 selected = 0;	// number of the list above that start selected (the first one is 0, the second one is 1 and so on)

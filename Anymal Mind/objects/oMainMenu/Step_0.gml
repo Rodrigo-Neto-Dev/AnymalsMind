@@ -30,10 +30,7 @@ if keyboard_check_pressed(menu_confirmation_buttom) {
 		case 2:	// Controls
 			show_controls_ui = true;
 			break;
-		case 3: // Credits
-			// add code of what to do when confirming this item
-			break;
-		case 4: // Exit Game
+		case 3: // Exit Game
 			game_end(0)
 			break;
 	}
