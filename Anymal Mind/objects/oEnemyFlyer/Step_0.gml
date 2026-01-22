@@ -1,4 +1,4 @@
-	event_inherited();
+event_inherited();
 
 	var p2 = instance_find(oP2, 0);
 

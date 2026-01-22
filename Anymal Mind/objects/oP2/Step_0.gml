@@ -1,4 +1,3 @@
-
 switch (state) {
 	case "stunned":
 		stun_timer--;
@@ -32,8 +31,9 @@ if (mouse_check_button_pressed(key_ui_interact())) {
 	var square_selected_and_state = get_square_selected(x, y);
 	var square_selected = square_selected_and_state[0];
 	var square_state = square_selected_and_state[1];
-	
+
 	if (0 <= square_selected and square_selected <= 3) select_animal(square_selected, square_state);
+	
 
 }
 
@@ -41,72 +41,67 @@ if (mouse_check_button_pressed(key_ui_interact())) {
 
 // Pick up item
 if (mouse_check_button_pressed(mb_left)) {
-    var inst_item = instance_place(x, y, oItem);
-    
-    if (inst_item != noone) {
-        carry_item = inst_item;
-		carry_item.is_moving = 1;
 	if carry_item = noone {
-	    var inst_item = instance_place(x, y, oItem);
+
+		var inst_item = instance_place(x, y, oItem);
+
 		var pick_up_item_id = get_square_selected_item(x, y);
-	    if (inst_item != noone) {
+
+		if (inst_item != noone) {
+
 			pickup_item(pick_up_item_id)
+
 			carry_item = inst_item;
+
 			carry_item.is_moving = 1;
+
 			carry_item.is_stored = 0;
-        
-<<<<<<< HEAD
-        // Store offset so item doesn't snap
-        drag_offset_x = inst_item.x - x;
-        drag_offset_y = inst_item.y - y;
-    }
-}
 
 
-if (mouse_check_button(mb_left)) {
-	
-    if (carry_item != noone) {
-        carry_item.x = x + drag_offset_x;
-        carry_item.y = y + drag_offset_y;
-=======
-	        // Store offset so item doesn't snap
-	        drag_offset_x = inst_item.x - x;
-	        drag_offset_y = inst_item.y - y;
-	    }
->>>>>>> bd7d01c930412d7961de492593fa23c1c22b0d14
+// Store offset so item doesn't snap
+
+			drag_offset_x = inst_item.x - x;
+
+			drag_offset_y = inst_item.y - y;
+
+		}
+
 	}
+
 }
 
 
 
 
-//if (mouse_check_button(mb_left)) {
-	
+
 if (carry_item != noone) {
-	
-    carry_item.x = x + drag_offset_x;
-    carry_item.y = y + drag_offset_y;
+
+	carry_item.x = x + drag_offset_x;
+
+	carry_item.y = y + drag_offset_y;
+
 }
-//}
 
 if (mouse_check_button_released(mb_left)) {
+	
 	if (carry_item != noone) {
-		carry_item.is_moving = 0;
-		carry_item = noone;
-		
-		var store_item_id = get_square_selected_item(x, y); 
+	
+		var store_item_id = get_square_selected_item(x, y);
+
 		store_item(store_item_id);
+
 		if store_item_id < 0 {
+
+			if carry_item.item_has_collision = 1 {
+				carry_item.is_moving = 0;
+			}
+			else {
+				carry_item.is_moving = 1;
+			}
+			
 			carry_item = noone;
+
 		}
-		//var cam_for_items = view_camera[0];
-		//carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-		//carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-		//carry_item.is_moving = 0;
-		//carry_item.is_stored = 1;
-		//carry_item = noone;
-		
+
 	}
 }
-
-

@@ -10,7 +10,7 @@ contact_cooldown = 0;
 contact_cooldown_max = 20;
 
 // Optional: on-death drops (ITEM ids)
-drops = [oItem]; // e.g. drops = [ITEM.TWIG, ITEM.STONE];
+drops = [oJumper]; // e.g. drops = [ITEM.TWIG, ITEM.STONE];
 
 function take_damage(amount) {
     if (invuln > 0) return;
@@ -26,7 +26,7 @@ function take_damage(amount) {
 
 function die() {
     for (var i = 0; i < array_length(drops); i++) {
-        var it = instance_create_layer(x, y, "Enemies", oItem);
+        var it = instance_create_layer(x, y, "PlayersEnemies", oJumper);
         it.item_id = drops[i];
     }
     instance_destroy();
