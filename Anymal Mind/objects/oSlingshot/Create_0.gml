@@ -1,5 +1,7 @@
 event_inherited();
 
+item_has_collision = 0;
+
 damage_to_p1 = 1;
 damage_to_p2 = 1;
 damage_to_enemy = 2;

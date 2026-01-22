@@ -41,33 +41,68 @@ if (mouse_check_button_pressed(key_ui_interact())) {
 
 // Pick up item
 if (mouse_check_button_pressed(mb_left)) {
-    var inst_item = instance_place(x, y, oItem);
+	if carry_item = noone {
 
-    if (inst_item != noone) {
-        carry_item = inst_item;
-		carry_item.is_moving = 1;
+		var inst_item = instance_place(x, y, oItem);
 
-        // Store offset so item doesn't snap
-        drag_offset_x = inst_item.x - x;
-        drag_offset_y = inst_item.y - y;
-    }
+		var pick_up_item_id = get_square_selected_item(x, y);
+
+		if (inst_item != noone) {
+
+			pickup_item(pick_up_item_id)
+
+			carry_item = inst_item;
+
+			carry_item.is_moving = 1;
+
+			carry_item.is_stored = 0;
+
+
+// Store offset so item doesn't snap
+
+			drag_offset_x = inst_item.x - x;
+
+			drag_offset_y = inst_item.y - y;
+
+		}
+
+	}
+
 }
 
 
 
 
-if (mouse_check_button(mb_left)) {
 
-    if (carry_item != noone) {
-        carry_item.x = x + drag_offset_x;
-        carry_item.y = y + drag_offset_y;
-	}
+if (carry_item != noone) {
+
+	carry_item.x = x + drag_offset_x;
+
+	carry_item.y = y + drag_offset_y;
+
 }
 
 if (mouse_check_button_released(mb_left)) {
+	
 	if (carry_item != noone) {
-		carry_item.is_moving = 0;
-		carry_item = noone;
+	
+		var store_item_id = get_square_selected_item(x, y);
+
+		store_item(store_item_id);
+
+		if store_item_id < 0 {
+
+			if carry_item.item_has_collision = 1 {
+				carry_item.is_moving = 0;
+			}
+			else {
+				carry_item.is_moving = 1;
+			}
+			
+			carry_item = noone;
+
+		}
+
 	}
 }
 
