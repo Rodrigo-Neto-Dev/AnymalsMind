@@ -26,6 +26,17 @@ function text(_text, _x, _y, _font, _halign, _valign, _text_color, _text_alpha) 
 	draw_set_color(c_white);
 }
 
+function text_transformed(_text, _x, _y, _font, _halign, _valign, _text_color, _text_alpha,x_scale,y_scale) {
+	draw_set_font(_font);
+	draw_set_halign(_halign);
+	draw_set_valign(_valign);
+	draw_set_color(_text_color);
+	draw_set_alpha(_text_alpha);
+	draw_text_transformed(_x, _y, _text,x_scale,y_scale,0);
+	draw_set_alpha(1);
+	draw_set_color(c_white);
+}
+
 function shadowed_text(_text, _x, _y, _font, _halign, _valign, _shadow_offset, _text_color, _shadow_color, _text_alpha, _shadow_alpha) {
 	draw_set_font(_font);
 	draw_set_halign(_halign);

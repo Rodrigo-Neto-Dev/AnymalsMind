@@ -1,0 +1,1 @@
+if (ds_exists(hit_cd, ds_type_map)) ds_map_destroy(hit_cd);
