@@ -106,7 +106,6 @@
     {"id":{"name":"sLog","path":"sprites/sLog/sLog.yy",},},
     {"id":{"name":"sP1Bear","path":"sprites/sP1Bear/sP1Bear.yy",},},
     {"id":{"name":"sP1Bird","path":"sprites/sP1Bird/sP1Bird.yy",},},
-    {"id":{"name":"sP1BirdAnim","path":"sprites/sP1BirdAnim/sP1BirdAnim.yy",},},
     {"id":{"name":"sP1Blob","path":"sprites/sP1Blob/sP1Blob.yy",},},
     {"id":{"name":"sP1BlobIdle","path":"sprites/sP1BlobIdle/sP1BlobIdle.yy",},},
     {"id":{"name":"sP1BlobJumping","path":"sprites/sP1BlobJumping/sP1BlobJumping.yy",},},

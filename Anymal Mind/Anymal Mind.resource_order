@@ -75,7 +75,6 @@
     {"name":"sLog","order":1,"path":"sprites/sLog/sLog.yy",},
     {"name":"sP1Bear","order":4,"path":"sprites/sP1Bear/sP1Bear.yy",},
     {"name":"sP1Bird","order":5,"path":"sprites/sP1Bird/sP1Bird.yy",},
-    {"name":"sP1BirdAnim","order":6,"path":"sprites/sP1BirdAnim/sP1BirdAnim.yy",},
     {"name":"sP1Blob","order":1,"path":"sprites/sP1Blob/sP1Blob.yy",},
     {"name":"sP1BlobIdle","order":2,"path":"sprites/sP1BlobIdle/sP1BlobIdle.yy",},
     {"name":"sP1BlobJumping","order":4,"path":"sprites/sP1BlobJumping/sP1BlobJumping.yy",},
