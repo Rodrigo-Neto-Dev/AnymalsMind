@@ -32,8 +32,11 @@ execute_behaviors();
 	else ignore_swimming_climbing_states = false;
 #endregion
 
+
 prepare_move();
 execute_move();
+
+jumper_bounce_check();
 
 
 var p2 = instance_nearest(x, y, oP2);

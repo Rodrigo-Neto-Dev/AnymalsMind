@@ -538,6 +538,21 @@ function execute_dash() {
 	}
 }
 
+function jumper_bounce_check() {
+    if (ysp < 0) return;
+	
+    var foot_y = bbox_bottom + 1;
+    var left   = bbox_left + 2;
+    var right  = bbox_right - 2;
+
+    var jumper = collision_rectangle(left, foot_y, right, foot_y + 2, oJumper, false, true);
+    if (jumper != noone && jumper.cooldown <= 0 && jumper.is_stored == 0) {
+        ysp = -jumper.jump_strength;
+        delP1State(P1State.GROUNDED);
+        jumper.cooldown = jumper.cooldown_max;
+    }
+}
+
 function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
