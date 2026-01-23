@@ -79,18 +79,8 @@ function revive() {
     state = "normal";
 }
 
-item1 = noone;
+items = [noone, noone, noone, noone, noone];
 
-item2 = noone;
-
-item3 = noone;
-
-item4 = noone;
-
-item5 = noone;
-
-
-  
 
 function get_square_selected_item(player_x, player_y) {
 
@@ -106,174 +96,27 @@ function get_square_selected_item(player_x, player_y) {
 
 }
 
-  
 
 function store_item(item_numb) {
-
+	if (item_numb == -1) return;
+	
 	var cam_for_items = view_camera[0];
-
-	if item_numb = 0 {
-
-		if item1 == noone {
-
-
-			carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-			carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-			carry_item.is_stored = 1;
-			item1 = carry_item;
-			carry_item = noone;
-
-			// Old sulution, keeping it just in case i need it
-
-			//var item1_item = instance_create_layer(carry_item.x, carry_item.y, "UI", temp_item)
-
-			//item1_item.is_stored = 1;
-
-			//item1 = temp_item
-
-			//var temp_item2 = carry_item
-
-			//carry_item = noone;
-
-			//instance_destroy(temp_item2)
-
-  
-
-		}
-
+	var _item = items[item_numb];
+	
+	if (_item == noone) {
+		carry_item.UI_offset_x = 0//carry_item.x - camera_get_view_x(cam_for_items);
+		carry_item.UI_offset_y = 0//carry_item.y - camera_get_view_y(cam_for_items);
+		carry_item.is_stored = 1;
+		_item = carry_item;
+		carry_item = noone;
 	}
-
-	if item_numb = 1 {
-
-		if item2 == noone {
-
-
-			carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-
-			carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-
-			carry_item.is_stored = 1;
-
-			item2 = carry_item;
-
-			carry_item = noone;
-
-		}
-
-	}
-
-	if item_numb = 2 {
-
-		if item3 == noone {
-
-
-
-			carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-
-			carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-
-			carry_item.is_stored = 1;
-
-			item3 = carry_item;
-
-			carry_item = noone;
-
-		}
-
-	}
-
-	if item_numb = 3 {
-
-		if item4 == noone {
-
-
-
-			carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-
-			carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-
-			carry_item.is_stored = 1;
-
-			item4 = carry_item;
-
-			carry_item = noone;
-
-		}
-
-	}
-
-	if item_numb = 4 {
-
-		if item5 == noone {
-
-
-
-			carry_item.UI_offset_x = carry_item.x - camera_get_view_x(cam_for_items);
-
-			carry_item.UI_offset_y = carry_item.y - camera_get_view_y(cam_for_items);
-
-			carry_item.is_stored = 1;
-
-			item5 = carry_item;
-
-			carry_item = noone;
-
-		}
-
-	}
-
 }
 
-  
 
 function pickup_item(item_numb) {
-
-	if item_numb = 0 {
-
-		if item1 != noone {
-
-			item1 = noone;
-
-		}
-
-	}
-
-	if item_numb = 1 {
-
-		if item2 != noone {
-
-			item2 = noone;
-
-		}
-
-	}
-
-	if item_numb = 2 {
+	if (item_numb == -1) return;
 	
-		if item3 != noone {
-
-			item3 = noone;
-
-		}
-
-	}
-
-	if item_numb = 3 {
-
-		if item4 != noone {
-
-			item4 = noone;
-
-		}
-
-	}
-
-	if item_numb = 4 {
-
-		if item5 != noone {
-
-			item5 = noone;	
-
-		}
+	if (items[item_numb] != noone) {
+		items[item_numb] = noone;
 	}
 }

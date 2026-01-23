@@ -26,7 +26,7 @@ function take_damage(amount) {
 
 function die() {
     for (var i = 0; i < array_length(drops); i++) {
-        var it = instance_create_layer(x, y, "PlayersEnemies", oJumper);
+        var it = instance_create_layer(x, y, "Objects", oJumper);
         it.item_id = drops[i];
     }
     instance_destroy();

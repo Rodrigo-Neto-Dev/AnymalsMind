@@ -33,8 +33,6 @@ if (mouse_check_button_pressed(key_ui_interact())) {
 	var square_state = square_selected_and_state[1];
 
 	if (0 <= square_selected and square_selected <= 3) select_animal(square_selected, square_state);
-	
-
 }
 
 
