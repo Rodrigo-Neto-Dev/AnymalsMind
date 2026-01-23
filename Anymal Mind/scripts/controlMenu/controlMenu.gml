@@ -48,6 +48,7 @@ function p1_controls_array() {
 	
 	controls_push(controls, "Special Ability", "X");
 	controls_push(controls, "Shoot", "F");
+	controls_push(controls, "Revive Player 2", "E");
 	
 	return controls;
 }
