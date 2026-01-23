@@ -34,6 +34,7 @@ animal_selected_background_color = c_lime;
 
 // Items
 item_background_color = c_silver;
+item_scale = 4;
 
 function draw_lives() {
 	var lives_str = string(global.lives);
@@ -98,8 +99,8 @@ function draw_items() {
 	var draw_x = inc * (last_unmerged_animal_index - first_unmerged_animal_index + 1) + inc;
 	var draw_y = bottom_rect_yorigin + rectangle_height / 2;
 	
-	for (var i = 0; i < 5; i++) { // TODO -> items.length
-		// TODO -> get item
+	for (var i = 0; i < array_length(global.item_squares_stored); i++) {
+		var _item = global.item_squares_stored[i];
 		
 		// Square
 		draw_set_alpha(square_alpha);
@@ -116,7 +117,19 @@ function draw_items() {
 			true
 		);
 		
-		// TODO -> draw item just like the animals (with the discovered condition too...maybe)
+		if (_item == noone) {
+			draw_x += inc;
+			continue;
+		}
+		
+		var item_sprite = object_get_sprite(_item);
+		
+		draw_sprite_ext(
+		    item_sprite, 0,
+			draw_x + inc / 2, draw_y,
+			item_scale, item_scale,
+			0, c_white, 1
+		);
 		
 		draw_x += inc;
 	}

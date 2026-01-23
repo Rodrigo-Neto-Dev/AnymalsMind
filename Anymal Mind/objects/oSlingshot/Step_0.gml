@@ -1,5 +1,4 @@
 event_inherited();
-is_moving = 1;
 
 if (fire_cooldown > 0) fire_cooldown--;
 

@@ -16,7 +16,6 @@ function take_damage(amount) {
     if (invuln > 0) return;
 
     hp -= amount;
-    show_debug_message("ENEMY " + string(id) + " took " + string(amount) + " hp=" + string(hp));
 
     invuln = invuln_max;
 
@@ -26,7 +25,7 @@ function take_damage(amount) {
 
 function die() {
     for (var i = 0; i < array_length(drops); i++) {
-        var it = instance_create_layer(x, y, "Objects", oJumper);
+        var it = instance_create_layer(x, y, "PlayersEnemies", oJumper);
         it.item_id = drops[i];
     }
     instance_destroy();

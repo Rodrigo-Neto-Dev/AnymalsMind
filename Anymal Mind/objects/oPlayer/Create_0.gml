@@ -460,7 +460,6 @@ function prepare_move() {
 }
 
 function execute_move() {
-	show_debug_message(toStringP1States());
 	if (containsP1State(P1State.DASHING)) {
 		var boxes_dashed = ds_list_create();
 		
@@ -553,10 +552,27 @@ function jumper_bounce_check() {
     }
 }
 
+function save_items() {
+	var dst = global.item_squares_stored_before_room;
+	var src = global.item_squares_stored;
+	var len = array_length(src);
+	
+	array_copy(dst, 0, src, 0, len);
+}
+
+function load_items() {
+	var dst = global.item_squares_stored;
+	var src = global.item_squares_stored_before_room;
+	var len = array_length(src);
+	
+	array_copy(dst, 0, src, 0, len);
+}
+
 function next_level() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
+	save_items();
 	global.current_level++;
 	room_goto_next();
 }
@@ -565,6 +581,7 @@ function die() {
 	global.current_animal = current_animal;
 	global.current_animal_sprite = sprite_index;
 	global.current_animation_states = current_animation_states;
+	load_items();
 	room_persistent = false
 	room_restart();
 	dec_lives();

@@ -7,6 +7,8 @@ global.reset_all_rooms[1] = false
 global.lives = 9;
 global.current_level = 1;
 global.animal_squares_selected = [false, false, false, false];
+global.item_squares_stored = [noone, noone, noone, noone, noone];
+global.item_squares_stored_before_room = [noone, noone, noone, noone, noone];
 
 global.animals = ds_map_create();
 ds_map_add(global.animals, "Human", {sprite: sPlayer, aerial: false, strong: false, aquatic: false, climber: false, discovered: true})
